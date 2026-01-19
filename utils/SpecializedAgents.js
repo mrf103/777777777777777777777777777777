@@ -313,12 +313,38 @@ ${text.length > 15000 ? '\n... (تم الاقتطاع للطول)' : ''}
 class AgentCoordinator {
   constructor() {
     this.agents = {
+      // Existing Agents - معالجة النص الأساسية
       structural: new StructuralAnalysisAgent(),
       linguistic: new LinguisticCleaningAgent(),
       quality: new QualityControlAgent(),
       compensation: new CompensationAgent(),
       chapter: new ChapterDivisionAgent()
     };
+    
+    // NEW - Agency Agents (lazy loading)
+    this.agencyAgents = null;
+  }
+  
+  /**
+   * تحميل وكلاء الوكالة عند الحاجة
+   */
+  async _loadAgencyAgents() {
+    if (!this.agencyAgents) {
+      const { 
+        MarketingAgent, 
+        SocialMediaAgent, 
+        MediaScriptAgent, 
+        DesignCoverAgent 
+      } = await import('./agents/index.js');
+      
+      this.agencyAgents = {
+        marketing: new MarketingAgent(),
+        socialMedia: new SocialMediaAgent(),
+        mediaScript: new MediaScriptAgent(),
+        coverDesign: new DesignCoverAgent()
+      };
+    }
+    return this.agencyAgents;
   }
   
   /**
@@ -389,10 +415,107 @@ class AgentCoordinator {
   }
   
   /**
+   * NEW - توليد حزمة Agency كاملة
+   * يولد: محتوى تسويقي + سوشال ميديا + سكريبتات + تصميم أغلفة
+   */
+  async generateAgencyPackage(manuscript, options = {}) {
+    console.log('🚀 بدء توليد حزمة Agency in a Box...');
+    
+    const results = {
+      manuscript: {
+        title: manuscript.title,
+        processedText: null
+      },
+      marketing: null,
+      socialMedia: null,
+      mediaScripts: null,
+      coverDesign: null,
+      timestamp: new Date().toISOString(),
+      metadata: {}
+    };
+    
+    try {
+      // تحميل وكلاء الوكالة
+      const agents = await this._loadAgencyAgents();
+      
+      // المرحلة 1: معالجة النص الأساسية (الوكلاء الأصليين)
+      if (options.processText !== false) {
+        console.log('📝 معالجة النص الأساسية...');
+        const processed = await this.processWithAgents(manuscript.content, {
+          language: 'ar',
+          divideChapters: true,
+          compensate: options.compensate || false,
+          originalWordCount: wordCount(manuscript.content),
+          context: {
+            main_theme: manuscript.genre || 'عام',
+            writing_style: 'احترافي',
+            language: 'ar',
+            tone: manuscript.mood || 'متوازن'
+          }
+        });
+        
+        results.manuscript.processedText = processed.finalText;
+        results.metadata.textProcessing = processed.metadata;
+      }
+      
+      // المرحلة 2: توليد المحتوى التسويقي
+      if (options.includeMarketing !== false) {
+        console.log('📢 Agent 6: توليد المحتوى التسويقي...');
+        const marketing = await agents.marketing.generateMarketingPackage(manuscript);
+        results.marketing = marketing;
+      }
+      
+      // المرحلة 3: توليد محتوى السوشال ميديا
+      if (options.includeSocialMedia !== false) {
+        console.log('📱 Agent 7: توليد محتوى السوشال ميديا...');
+        const social = await agents.socialMedia.generateSocialMediaPackage(manuscript);
+        results.socialMedia = social;
+      }
+      
+      // المرحلة 4: توليد السكريبتات الإعلامية
+      if (options.includeMediaScripts !== false) {
+        console.log('🎬 Agent 8: توليد السكريبتات الإعلامية...');
+        const scripts = await agents.mediaScript.generateMediaScriptPackage(manuscript);
+        results.mediaScripts = scripts;
+      }
+      
+      // المرحلة 5: توليد تصاميم الأغلفة
+      if (options.includeCoverDesign !== false) {
+        console.log('🎨 Agent 9: توليد تصاميم الأغلفة...');
+        const covers = await agents.coverDesign.generateCoverDesignPackage(manuscript);
+        results.coverDesign = covers;
+      }
+      
+      console.log('✅ اكتملت حزمة Agency in a Box بنجاح!');
+      
+      return {
+        success: true,
+        data: results
+      };
+      
+    } catch (error) {
+      console.error('❌ فشل توليد حزمة Agency:', error);
+      return {
+        success: false,
+        error: error.message,
+        partialData: results
+      };
+    }
+  }
+  
+  /**
    * الحصول على وكيل محدد
    */
   getAgent(type) {
     return this.agents[type];
+  }
+  
+  /**
+   * الحصول على وكيل وكالة محدد
+   */
+  async getAgencyAgent(type) {
+    const agents = await this._loadAgencyAgents();
+    return agents[type];
   }
 }
 
