@@ -6,26 +6,31 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: 'jsdom',
-    setupFiles: './tests/setup.js',
+    environment: 'happy-dom',
+    setupFiles: ['./tests/setup.js'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       exclude: [
         'node_modules/',
         'tests/',
-        '*.config.js'
-      ]
-    }
+        '*.config.js',
+        'dist/',
+        '.eslintrc.cjs',
+      ],
+    },
+    include: ['tests/**/*.{test,spec}.{js,jsx}'],
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@/utils': path.resolve(__dirname, './utils'),
-      '@/lib': path.resolve(__dirname, './lib'),
-      '@/hooks': path.resolve(__dirname, './hooks'),
+      '@': path.resolve(__dirname, './'),
       '@/Components': path.resolve(__dirname, './Components'),
-      '@/Pages': path.resolve(__dirname, './Pages')
-    }
-  }
+      '@/lib': path.resolve(__dirname, './lib'),
+      '@/utils': path.resolve(__dirname, './utils'),
+      '@/hooks': path.resolve(__dirname, './hooks'),
+      '@/api': path.resolve(__dirname, './api'),
+      '@/contexts': path.resolve(__dirname, './contexts'),
+      '@/Pages': path.resolve(__dirname, './Pages'),
+    },
+  },
 });

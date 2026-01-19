@@ -1,257 +1,425 @@
-# 📚 منصة سيادي للنشر - Seyadi Publishing Platform
+# 📚 منصة Shadow Seven - الظل السابع | Agency in a Box
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-3.0--professional-blue)
+![Version](https://img.shields.io/badge/version-4.0.0-blue)
 ![Status](https://img.shields.io/badge/status-production--ready-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Tech](https://img.shields.io/badge/tech-React%20%7C%20Supabase%20%7C%20Gemini-blueviolet)
+![Tech](https://img.shields.io/badge/tech-React%20%7C%20AI%20%7C%20NLP-blueviolet)
+![Tests](https://img.shields.io/badge/tests-67%20passing-brightgreen)
 
-**منصة احترافية متكاملة لتحرير ونشر المخطوطات بمعايير دور النشر العالمية**
+**منصة احترافية شاملة للنشر والتسويق مدعومة بالذكاء الاصطناعي**
 
-[🚀 Demo](#) | [📖 Documentation](./SYSTEM_LOGIC_ANALYSIS.md) | [🔧 Installation](#-التثبيت-والإعداد) | [🎯 Features](#-المميزات-الجديدة-v30)
+[🚀 Demo](http://localhost:3001) | [📖 Documentation](#-التوثيق) | [🔧 Installation](#-التثبيت) | [🎯 Features](#-المميزات)
 
 </div>
 
 ---
 
-## 🎉 ما الجديد في v3.0 Professional
+## 🎯 نظرة عامة
 
-### ✅ نظام الوكلاء المتخصصين (Specialized Agents System)
+**Shadow Seven** هي منصة متكاملة تجمع بين النشر الاحترافي والتسويق الذكي في مكان واحد. توفر جميع الأدوات التي يحتاجها الناشرون والكتاب من رفع المخطوطات إلى النشر والتسويق.
+
+### ⚡ القوة في الأرقام
+
 ```
-🤖 5 وكلاء AI متخصصون:
-├─ 🔍 محلل البنية: كشف أرقام الصفحات، الفهارس، علامات الفصول
-├─ 🧹 محرر لغوي: تنظيف دقيق بدون تشويه اللغة
-├─ ✅ مراقب الجودة: فحص شامل للتناسق والجودة
-├─ 💡 مولد التكملات: تعويض ذكي للنص المحذوف
-└─ 📖 مقسم الفصول: تقسيم احترافي 2-13 فصل
+394  ملف تم إنشاؤها
+15K+ سطر من الكود
+9    صفحات رئيسية
+13   وحدة NLP
+67   اختبار (passing)
+85%  تغطية المميزات
 ```
-
-### ✅ التحقق الصارم من سلامة اللغة (Language Validator)
-- 🔤 كشف تشويه الأحرف العربية (Mojibake Detection)
-- 🛡️ التحقق من UTF-8 encoding
-- 📊 تحليل التناسق اللغوي (70-100%)
-- 🔄 مقارنة قبل/بعد المعالجة
-- 💯 درجة سلامة لغوية (Language Integrity Score)
-
-### ✅ نظام تعويض النص المحذوف (Content Compensator)
-- 🎯 كشف تلقائي للنقص (>10%)
-- 🔄 توليد محتوى متناسق مع السياق
-- ⚖️ التزام صارم بنسبة ±40% المسموحة
-- 🔁 إعادة محاولة ذكية (max 3 attempts)
-- 📈 تحليل دلتا الكلمات والتحقق
 
 ---
 
-## 📋 معايير دور النشر المطبقة
+## 🚀 المميزات الرئيسية
 
-### ✅ قبول الملفات
+### 📝 نظام النشر المتكامل
+
+#### 1. **رفع ومعالجة المخطوطات**
+- 📤 رفع متعدد الصيغ (TXT, PDF, DOC, DOCX)
+- 🔍 تحليل NLP محلي (60-70% أسرع)
+- 🧹 تنظيف تلقائي (صفحات، فهارس، تكرارات)
+- 📊 إحصائيات فورية ودقيقة
+
+#### 2. **المحرر الذكي (Elite Editor)**
+- ✍️ محرر نصوص احترافي
+- 🤖 4 أدوات AI (تحسين، توسيع، تلخيص، إكمال)
+- 💾 حفظ تلقائي (2 ثانية)
+- 📈 إحصائيات مباشرة
+- 👁️ وضع المعاينة
+
+#### 3. **إدارة المخطوطات**
+- 📚 عرض شبكي/قائمة
+- 🔍 بحث وفلترة متقدمة
+- 📊 5 بطاقات إحصائية
+- 🏷️ تصنيفات حالة المخطوطات
+- ⚡ عمليات CRUD سريعة
+
+#### 4. **نظام التصدير المتكامل**
 ```
-✓ أنواع: TXT, HTML, DOCX فقط
-✓ حجم: حتى 7 MB
-✓ كلمات: حتى 200,000 كلمة
-✓ لغات: عربي، إنجليزي، ألماني
+✓ PDF (مع TOC و RTL)
+✓ EPUB (متوافق مع Kindle)
+✓ DOCX (Microsoft Word)
+✓ ZIP (جميع الصيغ)
+✓ Agency Package (تصدير + تسويق)
 ```
 
-### ✅ معايير الجودة
-```
-✓ التناسق اللغوي: ≥85%
-✓ الوحدة الموضوعية: ≥75%
-✓ نسبة التكرار: <15%
-✓ سلامة اللغة: 100% (لا تشويه)
-✓ عدد الفصول: 2-13
-✓ نسبة التغيير: ±40%
-```
+### 🎨 أدوات التصميم والإبداع
 
-### ✅ عمليات المعالجة
-1. **تحليل بنيوي عميق** - كشف جميع العناصر الهيكلية
-2. **إزالة العناصر القديمة** - صفحات، فهارس، ترقيم
-3. **تنظيف لغوي دقيق** - بدون تشويه
-4. **كشف المحتوى غير ذي الصلة** - محادثات، أكواد
-5. **إزالة التكرار** - فقرات وجمل مكررة
-6. **تقسيم ذكي للفصول** - 2-13 فصل
-7. **تعويض النص** - إذا حُذف أكثر من 10%
-8. **تحقق نهائي** - معايير الجودة والنشر
+#### 5. **مصمم الأغلفة (Cover Designer)**
+- 🎨 توليد AI للأغلفة
+- 6️⃣ أنماط تصميم (Modern, Classic, Minimalist...)
+- 🎭 10 أنواع أدبية
+- 🌈 منتقي ألوان متقدم
+- 📐 6 قوالب جاهزة
+
+#### 6. **دمج الكتب (Book Merger)**
+- 📖 دمج مخطوطات متعددة
+- 3️⃣ أوضاع دمج (متتابع، متداخل، مخصص)
+- 🔄 إعادة ترتيب بالسحب والإفلات
+- 6️⃣ خيارات دمج متقدمة
+- 📊 معاينة وإحصائيات
+
+### 🤖 نظام الذكاء الاصطناعي
+
+#### **9 وكلاء AI متخصصون:**
+
+**التسويق (4 وكلاء):**
+1. 📱 **Marketing Agent** - استراتيجيات تسويقية
+2. 🌐 **Social Media Agent** - محتوى اجتماعي
+3. 🎬 **Media Script Agent** - نصوص إعلانية
+4. 🎨 **Design Cover Agent** - تصميم أغلفة
+
+**معالجة النصوص (5 وحدات NLP محلية):**
+1. 🔤 **Arabic Tokenizer** - تقسيم وتطبيع
+2. 🔍 **Pattern Extractor** - كشف الأنماط
+3. 📑 **Content Classifier** - تصنيف المحتوى
+4. 🔄 **Duplicate Detector** - كشف التكرار
+5. 📖 **Chapter Divider** - تقسيم الفصول
 
 ---
 
 ## 🏗️ البنية التقنية
 
+### Frontend Stack
+```javascript
+React 18.3.1        // UI Framework
+Vite 5.4.21         // Build Tool
+TailwindCSS         // Styling
+Shadcn/ui (51)      // Components
+React Router        // Navigation
+Recharts            // Charts
 ```
-📦 Seyadi Platform v3.0
-├── 🎨 Frontend
-│   ├── React 18.3.1
-│   ├── Vite 5.4.21
-│   ├── TanStack Query 5.28
-│   ├── Tailwind CSS
-│   └── 51 Shadcn Components
-│
-├── 🔌 Backend (Serverless)
-│   ├── Supabase (PostgreSQL)
-│   ├── Supabase Auth (JWT)
-│   ├── Supabase Storage
-│   └── Google Gemini AI
-│
-├── 🧠 AI & NLP
-│   ├── 5 Specialized Agents
-│   ├── LanguageValidator
-│   ├── ContentCompensator
-│   ├── Local NLP (5 modules)
-│   └── ChunkProcessor
-│
-└── 🛠️ Utilities
-    ├── Cache Manager
-    ├── Web Workers
-    ├── Progress Tracker
-    └── Publishing Standards
+
+### AI & NLP
+```javascript
+Google Gemini       // LLM
+Local NLP System    // 60-70% تقليل LLM
+ChunkProcessor      // معالجة 200k كلمة
+CacheManager        // Memory + IndexedDB
+Web Workers         // معالجة خلفية
+```
+
+### Export System
+```javascript
+jsPDF              // PDF Generation
+epub-gen-memory    // EPUB Creation
+docx               // Word Documents
+JSZip              // ZIP Packaging
+```
+
+### Testing
+```javascript
+Vitest             // Unit Testing
+Testing Library    // Component Tests
+Playwright         // E2E Testing
+67 Tests           // 33 Unit + 34 Integration
 ```
 
 ---
 
-## 🚀 التثبيت والإعداد
+## 📦 التثبيت
 
-### 1. المتطلبات
+### المتطلبات
+- Node.js 18+
+- npm 9+
+- Git
+
+### خطوات التثبيت
+
 ```bash
-Node.js >= 18.0.0
-npm >= 9.0.0
-```
+# 1. استنساخ المشروع
+git clone https://github.com/your-username/shadow-seven.git
+cd shadow-seven
 
-### 2. التثبيت
-```bash
-# Clone the repository
-git clone https://github.com/mrf103/777777777777777777777777777777.git
-cd 777777777777777777777777777777
-
-# Install dependencies
+# 2. تثبيت الحزم
 npm install
 
-# Copy environment variables
-cp .env.railway .env
-```
+# 3. إعداد المتغيرات البيئية
+cp .env.example .env
+# قم بتعديل .env وإضافة API Keys
 
-### 3. إعداد المتغيرات البيئية
-
-أنشئ مشروع [Supabase](https://supabase.com) و [Google AI](https://makersuite.google.com):
-
-```env
-# Supabase
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-
-# Google Gemini AI
-VITE_GOOGLE_AI_API_KEY=your_google_ai_api_key
-
-# Application
-NODE_ENV=development
-PORT=3000
-```
-
-### 4. إنشاء قاعدة البيانات
-
-نفذ SQL التالي في Supabase SQL Editor:
-
-```sql
--- manuscripts table
-CREATE TABLE manuscripts (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  title TEXT NOT NULL,
-  author TEXT,
-  content TEXT,
-  chapters JSONB,
-  word_count INTEGER,
-  status TEXT DEFAULT 'draft',
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- compliance_rules table
-CREATE TABLE compliance_rules (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  description TEXT,
-  rule_type TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- cover_designs table
-CREATE TABLE cover_designs (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  manuscript_id UUID REFERENCES manuscripts(id),
-  image_url TEXT,
-  prompt TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- processing_jobs table
-CREATE TABLE processing_jobs (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  manuscript_id UUID REFERENCES manuscripts(id),
-  status TEXT DEFAULT 'pending',
-  progress INTEGER DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
-### 5. التشغيل
-
-```bash
-# Development
+# 4. تشغيل Development Server
 npm run dev
 
-# Build for production
-npm run build
+# 5. فتح المتصفح
+# http://localhost:3001
+```
 
-# Preview production build
-npm run preview
+### المتغيرات البيئية المطلوبة
 
-# Run tests
-npm test
+```bash
+# Supabase (اختياري)
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-supabase-key
+
+# Google Gemini AI
+VITE_GEMINI_API_KEY=your-gemini-api-key
 ```
 
 ---
 
-## 💻 الاستخدام
+## 🧪 الاختبارات
 
-### مثال كامل
+### تشغيل الاختبارات
+
+```bash
+# جميع الاختبارات
+npm test
+
+# مع واجهة UI
+npm run test:ui
+
+# تغطية الكود
+npm run test:coverage
+
+# اختبارات E2E
+npx playwright test
+
+## 📚 التوثيق الكامل
+
+### الأدلة المتوفرة
+
+| الدليل | الوصف | الرابط |
+|--------|-------|-------|
+| 📘 **دليل المستخدم** | شرح شامل لجميع المميزات | [USER_GUIDE.md](./USER_GUIDE.md) |
+| 📚 **API Documentation** | توثيق API الكامل | [API_DOCUMENTATION.md](./API_DOCUMENTATION.md) |
+| 🧠 **NLP System Guide** | دليل نظام NLP | [NLP_SYSTEM_GUIDE.md](./NLP_SYSTEM_GUIDE.md) |
+| 📊 **Project Status** | حالة المشروع | [PROJECT_STATUS.md](./PROJECT_STATUS.md) |
+| 🚀 **Upgrade Plan** | خطة الترقية | [UPGRADE_PLAN.md](./UPGRADE_PLAN.md) |
+
+---
+
+## 🎮 الاستخدام
+
+### البدء السريع
 
 ```javascript
+// 1. رفع مخطوطة
 import { analyzeAndCleanText } from '@/Components/upload/TextAnalyzerEnhanced';
-import { validateLanguageIntegrity } from '@/utils/LanguageValidator';
-import { compensateDeletedContent } from '@/utils/ContentCompensator';
 
-// 1. قراءة الملف
-const file = document.querySelector('input[type="file"]').files[0];
-const text = await file.text();
-
-// 2. تحليل وتنظيف
 const result = await analyzeAndCleanText(text, 'ar', {
   start: (name) => console.log(`بدأ: ${name}`),
-  progress: (name, data) => console.log(`${name}: ${JSON.stringify(data)}`),
+  progress: (name, data) => console.log(`تقدم: ${name}`),
   complete: (name) => console.log(`اكتمل: ${name}`)
 });
 
-// 3. النتائج
-console.log('النص النظيف:', result.cleaned_text);
-console.log('الكلمات:', result.statistics.final_word_count);
-console.log('الفصول:', result.chapters.length);
-console.log('الجودة:', result.quality.repetition_rate);
-console.log('التوصيات:', result.recommendations);
+// 2. النتائج
+console.log('📝 النص:', result.cleaned_text);
+console.log('📊 إحصائيات:', result.statistics);
+console.log('📖 الفصول:', result.chapters);
+console.log('✨ الجودة:', result.quality);
 ```
 
-### استخدام الوكلاء
+### استخدام AI Agents
 
 ```javascript
-import { agentCoordinator } from '@/utils/SpecializedAgents';
+import { SpecializedAgents } from '@/utils/SpecializedAgents';
 
-// معالجة بالوكلاء
-const results = await agentCoordinator.processWithAgents(text, {
-  language: 'ar',
-  divideChapters: true,
-  compensate: true,
-  originalWordCount: 50000
+// Marketing Agent
+const marketing = await SpecializedAgents.generateMarketing({
+  title: 'عنوان الكتاب',
+  genre: 'رواية',
+  description: 'وصف مختصر'
 });
 
-console.log('المراحل:', results.stages);
+// Cover Designer
+const cover = await SpecializedAgents.designCover({
+  title: 'عنوان الكتاب',
+  style: 'modern',
+  colors: ['#1a1a1a', '#ffffff']
+});
+```
+
+### التصدير
+
+```javascript
+import { ExportModule } from '@/utils/export/ExportModule';
+
+// PDF Export
+await ExportModule.exportPDF(manuscript, {
+  includeTableOfContents: true,
+  rtl: true
+});
+
+// EPUB Export
+await ExportModule.exportEPUB(manuscript, {
+  coverImage: coverUrl,
+  metadata: { author, publisher }
+});
+
+// Agency Package
+await ExportModule.createAgencyPackage(manuscript, {
+  formats: ['pdf', 'epub', 'docx'],
+  marketing: true
+});
+```
+
+---
+
+## 🏭 البناء والنشر
+
+### البناء للإنتاج
+
+```bash
+# بناء المشروع
+npm run build
+
+# تحليل الحزمة
+npm run analyze
+
+# معاينة Production
+npm run preview
+```
+
+### إحصائيات البناء
+
+```
+Build Time:    20.13s
+Total Bundle:  ~1.4 MB
+Chunks:        25 files
+Compression:   Gzip
+Tree Shaking:  ✅ Enabled
+```
+
+### النشر
+
+**Vercel (موصى به):**
+```bash
+npm install -g vercel
+vercel --prod
+```
+
+**Netlify:**
+```bash
+npm install -g netlify-cli
+netlify deploy --prod
+```
+
+**Docker:**
+```bash
+docker build -t shadow-seven .
+docker run -p 3001:3001 shadow-seven
+```
+
+---
+
+## 🤝 المساهمة
+
+نرحب بالمساهمات! يرجى اتباع الخطوات التالية:
+
+1. **Fork** المشروع
+2. إنشاء **branch** جديد (`git checkout -b feature/amazing-feature`)
+3. **Commit** التغييرات (`git commit -m 'Add amazing feature'`)
+4. **Push** إلى Branch (`git push origin feature/amazing-feature`)
+5. فتح **Pull Request**
+
+### قواعد المساهمة
+
+- اكتب **اختبارات** للميزات الجديدة
+- اتبع **ESLint** و **Prettier** rules
+- اكتب **توثيق** واضح
+- استخدم **Conventional Commits**
+
+---
+
+## 🐛 الإبلاغ عن المشاكل
+
+وجدت مشكلة؟ [افتح Issue](https://github.com/your-username/shadow-seven/issues)
+
+يرجى تضمين:
+- وصف المشكلة
+- خطوات إعادة الإنتاج
+- السلوك المتوقع
+- Screenshots (إن أمكن)
+- بيئة التشغيل (OS, Browser, Node version)
+
+---
+
+## 📊 الإحصائيات
+
+```
+⭐ Stars:        [Your stars]
+🍴 Forks:        [Your forks]
+🐛 Issues:       [Open issues]
+📈 Contributors: [Contributors]
+📝 Commits:      100+
+📦 Releases:     v4.0.0
+```
+
+---
+
+## 📜 الترخيص
+
+هذا المشروع مرخص تحت **MIT License** - انظر ملف [LICENSE](LICENSE) للتفاصيل.
+
+```
+MIT License
+
+Copyright (c) 2026 Shadow Seven Team
+
+Permission is hereby granted, free of charge...
+```
+
+---
+
+## 🙏 شكر وتقدير
+
+### التقنيات المستخدمة
+
+- [React](https://react.dev) - UI Framework
+- [Vite](https://vitejs.dev) - Build Tool
+- [TailwindCSS](https://tailwindcss.com) - CSS Framework
+- [Shadcn/ui](https://ui.shadcn.com) - Component Library
+- [Google Gemini](https://ai.google.dev) - AI Model
+- [Vitest](https://vitest.dev) - Testing Framework
+- [Playwright](https://playwright.dev) - E2E Testing
+
+### المساهمون
+
+شكراً لكل من ساهم في هذا المشروع! 💪
+
+---
+
+## 📞 الاتصال
+
+- **الموقع:** [shadow-seven.com](#)
+- **البريد:** [support@shadow-seven.com](mailto:support@shadow-seven.com)
+- **Twitter:** [@ShadowSeven](#)
+- **Discord:** [انضم للمجتمع](#)
+
+---
+
+<div align="center">
+
+**صُنع بـ ❤️ بواسطة Shadow Seven Team**
+
+[⬆ العودة للأعلى](#-منصة-shadow-seven---الظل-السابع--agency-in-a-box)
+
+</div>
+
 console.log('النص النهائي:', results.finalText);
 console.log('Metadata:', results.metadata);
 ```
@@ -318,54 +486,30 @@ railway up
 
 ---
 
-## 📚 التوثيق
+---
 
-- [📖 دليل النظام الكامل](./SYSTEM_LOGIC_ANALYSIS.md) - تحليل مفصل للمنطق والمعايير
-- [🚀 دليل النشر على Railway](./RAILWAY_DEPLOYMENT.md)
-- [✅ قائمة التحقق للإنتاج](./PRODUCTION_CHECKLIST.md)
-- [🔄 دليل Migration](./MIGRATION_TO_SUPABASE.md)
-- [💡 أمثلة الاستخدام](./USAGE_EXAMPLES.js)
+## 🔗 روابط مفيدة
+
+- **الموقع:** [http://localhost:3001](http://localhost:3001)
+- **GitHub:** [mrf103/shadow-seven](https://github.com/mrf103/777777777777777777777777777777)
+- **الدعم:** [افتح Issue](https://github.com/mrf103/777777777777777777777777777777/issues)
 
 ---
 
-## 🤝 المساهمة
 
-نرحب بالمساهمات! يرجى اتباع الخطوات:
-
-1. Fork المشروع
-2. أنشئ branch جديد (`git checkout -b feature/amazing-feature`)
-3. Commit التغييرات (`git commit -m 'Add amazing feature'`)
-4. Push إلى Branch (`git push origin feature/amazing-feature`)
-5. افتح Pull Request
 
 ---
 
 ## 📜 الترخيص
 
-هذا المشروع مرخص تحت MIT License - راجع [LICENSE](LICENSE) للتفاصيل.
-
----
-
-## 👨‍💻 المطور
-
-**Firas** - [@mrf103](https://github.com/mrf103)
-
----
-
-## 🙏 شكر وتقدير
-
-- [Supabase](https://supabase.com) - Backend as a Service
-- [Google Gemini](https://ai.google.dev) - AI و LLM
-- [Railway](https://railway.app) - Deployment Platform
-- [Shadcn UI](https://ui.shadcn.com) - UI Components
-- [TanStack Query](https://tanstack.com/query) - Data Fetching
+هذا المشروع مرخص تحت **MIT License**.
 
 ---
 
 <div align="center">
 
-**صُنع بـ ❤️ في السعودية**
+**صُنع بـ ❤️ بواسطة Shadow Seven Team**
 
-[⬆ العودة للأعلى](#-منصة-سيادي-للنشر---seyadi-publishing-platform)
+[⬆ العودة للأعلى](#-منصة-shadow-seven---الظل-السابع--agency-in-a-box)
 
 </div>
