@@ -10,6 +10,9 @@ const ExportPage = lazy(() => import('@/Pages/ExportPage'))
 const UploadPage = lazy(() => import('@/Pages/UploadPage'))
 const ManuscriptsPage = lazy(() => import('@/Pages/ManuscriptsPage'))
 const EliteEditorPage = lazy(() => import('@/Pages/EliteEditorPage'))
+const BookMergerPage = lazy(() => import('@/Pages/BookMergerPage'))
+const CoverDesignerPage = lazy(() => import('@/Pages/CoverDesignerPage'))
+const SettingsPage = lazy(() => import('@/Pages/SettingsPage'))
 
 // Loading component
 const PageLoader = () => (
@@ -33,9 +36,9 @@ function App() {
               <Route path="/manuscripts" element={<ManuscriptsPage />} />
               <Route path="/elite-editor/:id" element={<EliteEditorPage />} />
               <Route path="/export" element={<ExportPage />} />
-              <Route path="/book-merger" element={<div className="p-8 text-center text-muted-foreground">Book Merger - Coming Soon</div>} />
-              <Route path="/cover-designer" element={<div className="p-8 text-center text-muted-foreground">Cover Designer - Coming Soon</div>} />
-              <Route path="/settings" element={<div className="p-8 text-center text-muted-foreground">Settings - Coming Soon</div>} />
+              <Route path="/book-merger" element={<BookMergerPage />} />
+              <Route path="/cover-designer" element={<CoverDesignerPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
             </Route>
           </Routes>
         </Suspense>
