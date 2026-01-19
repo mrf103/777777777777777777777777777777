@@ -2,414 +2,369 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-2.0--enhanced-blue)
-![Build](https://img.shields.io/badge/build-passing-success)
+![Version](https://img.shields.io/badge/version-3.0--professional-blue)
+![Status](https://img.shields.io/badge/status-production--ready-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Arabic](https://img.shields.io/badge/language-العربية-orange)
+![Tech](https://img.shields.io/badge/tech-React%20%7C%20Supabase%20%7C%20Gemini-blueviolet)
 
-**نظام نشر ذكي مدعوم بالذكاء الاصطناعي لمعالجة النصوص العربية**
+**منصة احترافية متكاملة لتحرير ونشر المخطوطات بمعايير دور النشر العالمية**
 
-[الميزات](#-الميزات) • [التثبيت](#-التثبيت-السريع) • [الاستخدام](#-الاستخدام) • [التوثيق](#-التوثيق) • [المساهمة](#-المساهمة)
+[🚀 Demo](#) | [📖 Documentation](./SYSTEM_LOGIC_ANALYSIS.md) | [🔧 Installation](#-التثبيت-والإعداد) | [🎯 Features](#-المميزات-الجديدة-v30)
 
 </div>
 
 ---
 
-## 🎯 نظرة عامة
+## 🎉 ما الجديد في v3.0 Professional
 
-منصة سيادي هي نظام نشر احترافي يستخدم تقنيات الذكاء الاصطناعي لمعالجة وتحليل النصوص العربية. تتميز المنصة بنظام معالجة محلي متقدم يقلل الاعتماد على LLM بنسبة **60-70%** مع تحسين السرعة بمعدل **40-100x**.
+### ✅ نظام الوكلاء المتخصصين (Specialized Agents System)
+```
+🤖 5 وكلاء AI متخصصون:
+├─ 🔍 محلل البنية: كشف أرقام الصفحات، الفهارس، علامات الفصول
+├─ 🧹 محرر لغوي: تنظيف دقيق بدون تشويه اللغة
+├─ ✅ مراقب الجودة: فحص شامل للتناسق والجودة
+├─ 💡 مولد التكملات: تعويض ذكي للنص المحذوف
+└─ 📖 مقسم الفصول: تقسيم احترافي 2-13 فصل
+```
 
-### ✨ المميزات الرئيسية
+### ✅ التحقق الصارم من سلامة اللغة (Language Validator)
+- 🔤 كشف تشويه الأحرف العربية (Mojibake Detection)
+- 🛡️ التحقق من UTF-8 encoding
+- 📊 تحليل التناسق اللغوي (70-100%)
+- 🔄 مقارنة قبل/بعد المعالجة
+- 💯 درجة سلامة لغوية (Language Integrity Score)
 
-- 🚀 **معالجة فائقة السرعة** - 40-100x أسرع من الحلول التقليدية
-- 💰 **توفير التكاليف** - تقليل 60-70% من استخدام LLM
-- 📦 **دعم الملفات الكبيرة** - حتى 200,000 كلمة مع معالجة متوازية
-- 🔍 **تحليل ذكي** - كشف تلقائي للفصول والصفحات والفهارس
-- 🎨 **واجهة عربية متقدمة** - RTL كامل مع تصميم حديث
-- 🔄 **معالجة خلفية** - Web Workers لتجنب تجميد الواجهة
-- 💾 **تخزين ذكي** - Memory + IndexedDB مع TTL تلقائي
-
----
-
-## 📊 الأداء والإحصائيات
-
-| المؤشر | القيمة | التحسين |
-|--------|--------|---------|
-| **استخراج الفصول** | <0.1 ثانية | 100x أسرع |
-| **كشف الصفحات** | <0.05 ثانية | 100x أسرع |
-| **إحصائيات النص** | <0.01 ثانية | 400x أسرع |
-| **كشف التكرار** | <0.2 ثانية | 40x أسرع |
-| **تصنيف المحتوى** | <0.1 ثانية | 50x أسرع |
-| **استخدام LLM** | -60-70% | توفير كبير |
-| **حجم البناء** | 80KB (gzip) | محسّن |
+### ✅ نظام تعويض النص المحذوف (Content Compensator)
+- 🎯 كشف تلقائي للنقص (>10%)
+- 🔄 توليد محتوى متناسق مع السياق
+- ⚖️ التزام صارم بنسبة ±40% المسموحة
+- 🔁 إعادة محاولة ذكية (max 3 attempts)
+- 📈 تحليل دلتا الكلمات والتحقق
 
 ---
 
-## 🚀 التثبيت السريع
+## 📋 معايير دور النشر المطبقة
 
-### المتطلبات
+### ✅ قبول الملفات
+```
+✓ أنواع: TXT, HTML, DOCX فقط
+✓ حجم: حتى 7 MB
+✓ كلمات: حتى 200,000 كلمة
+✓ لغات: عربي، إنجليزي، ألماني
+```
 
-- Node.js >= 18.0.0
-- npm >= 9.0.0
+### ✅ معايير الجودة
+```
+✓ التناسق اللغوي: ≥85%
+✓ الوحدة الموضوعية: ≥75%
+✓ نسبة التكرار: <15%
+✓ سلامة اللغة: 100% (لا تشويه)
+✓ عدد الفصول: 2-13
+✓ نسبة التغيير: ±40%
+```
 
-### خطوات التثبيت
+### ✅ عمليات المعالجة
+1. **تحليل بنيوي عميق** - كشف جميع العناصر الهيكلية
+2. **إزالة العناصر القديمة** - صفحات، فهارس، ترقيم
+3. **تنظيف لغوي دقيق** - بدون تشويه
+4. **كشف المحتوى غير ذي الصلة** - محادثات، أكواد
+5. **إزالة التكرار** - فقرات وجمل مكررة
+6. **تقسيم ذكي للفصول** - 2-13 فصل
+7. **تعويض النص** - إذا حُذف أكثر من 10%
+8. **تحقق نهائي** - معايير الجودة والنشر
 
+---
+
+## 🏗️ البنية التقنية
+
+```
+📦 Seyadi Platform v3.0
+├── 🎨 Frontend
+│   ├── React 18.3.1
+│   ├── Vite 5.4.21
+│   ├── TanStack Query 5.28
+│   ├── Tailwind CSS
+│   └── 51 Shadcn Components
+│
+├── 🔌 Backend (Serverless)
+│   ├── Supabase (PostgreSQL)
+│   ├── Supabase Auth (JWT)
+│   ├── Supabase Storage
+│   └── Google Gemini AI
+│
+├── 🧠 AI & NLP
+│   ├── 5 Specialized Agents
+│   ├── LanguageValidator
+│   ├── ContentCompensator
+│   ├── Local NLP (5 modules)
+│   └── ChunkProcessor
+│
+└── 🛠️ Utilities
+    ├── Cache Manager
+    ├── Web Workers
+    ├── Progress Tracker
+    └── Publishing Standards
+```
+
+---
+
+## 🚀 التثبيت والإعداد
+
+### 1. المتطلبات
 ```bash
-# 1. استنساخ المشروع
+Node.js >= 18.0.0
+npm >= 9.0.0
+```
+
+### 2. التثبيت
+```bash
+# Clone the repository
 git clone https://github.com/mrf103/777777777777777777777777777777.git
 cd 777777777777777777777777777777
 
-# 2. تثبيت الحزم
+# Install dependencies
 npm install
 
-# 3. تشغيل بيئة التطوير
+# Copy environment variables
+cp .env.railway .env
+```
+
+### 3. إعداد المتغيرات البيئية
+
+أنشئ مشروع [Supabase](https://supabase.com) و [Google AI](https://makersuite.google.com):
+
+```env
+# Supabase
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Google Gemini AI
+VITE_GOOGLE_AI_API_KEY=your_google_ai_api_key
+
+# Application
+NODE_ENV=development
+PORT=3000
+```
+
+### 4. إنشاء قاعدة البيانات
+
+نفذ SQL التالي في Supabase SQL Editor:
+
+```sql
+-- manuscripts table
+CREATE TABLE manuscripts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  author TEXT,
+  content TEXT,
+  chapters JSONB,
+  word_count INTEGER,
+  status TEXT DEFAULT 'draft',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- compliance_rules table
+CREATE TABLE compliance_rules (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  description TEXT,
+  rule_type TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- cover_designs table
+CREATE TABLE cover_designs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  manuscript_id UUID REFERENCES manuscripts(id),
+  image_url TEXT,
+  prompt TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- processing_jobs table
+CREATE TABLE processing_jobs (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  manuscript_id UUID REFERENCES manuscripts(id),
+  status TEXT DEFAULT 'pending',
+  progress INTEGER DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+### 5. التشغيل
+
+```bash
+# Development
 npm run dev
 
-# 4. البناء للإنتاج
+# Build for production
 npm run build
 
-# 5. معاينة البناء
+# Preview production build
 npm run preview
+
+# Run tests
+npm test
 ```
 
 ---
 
 ## 💻 الاستخدام
 
-### الاستخدام الأساسي
+### مثال كامل
 
 ```javascript
 import { analyzeAndCleanText } from '@/Components/upload/TextAnalyzerEnhanced';
+import { validateLanguageIntegrity } from '@/utils/LanguageValidator';
+import { compensateDeletedContent } from '@/utils/ContentCompensator';
 
-// تحليل كامل للنص
+// 1. قراءة الملف
+const file = document.querySelector('input[type="file"]').files[0];
+const text = await file.text();
+
+// 2. تحليل وتنظيف
 const result = await analyzeAndCleanText(text, 'ar', {
   start: (name) => console.log(`بدأ: ${name}`),
-  progress: (name, data) => console.log(`تقدم: ${data.percentage}%`),
+  progress: (name, data) => console.log(`${name}: ${JSON.stringify(data)}`),
   complete: (name) => console.log(`اكتمل: ${name}`)
 });
 
+// 3. النتائج
 console.log('النص النظيف:', result.cleaned_text);
+console.log('الكلمات:', result.statistics.final_word_count);
 console.log('الفصول:', result.chapters.length);
-console.log('نسبة التكرار:', result.quality.repetition_rate);
+console.log('الجودة:', result.quality.repetition_rate);
+console.log('التوصيات:', result.recommendations);
 ```
 
-### استخدام React Hooks
+### استخدام الوكلاء
 
 ```javascript
-import { useTextAnalysis } from '@/hooks/useTextAnalysis';
+import { agentCoordinator } from '@/utils/SpecializedAgents';
 
-function MyComponent() {
-  const { analyze, analyzing, progress, results } = useTextAnalysis();
-  
-  const handleAnalyze = async () => {
-    const result = await analyze(text, { language: 'ar' });
-    console.log('النتيجة:', result);
-  };
-  
-  return (
-    <div>
-      {analyzing && <Progress value={progress} />}
-      <Button onClick={handleAnalyze}>تحليل</Button>
-      {results && <Results data={results} />}
-    </div>
-  );
-}
-```
-
-### معالجة ملفات كبيرة
-
-```javascript
-import { useChunkProcessor } from '@/hooks/useChunkProcessor';
-
-const { processText, progress } = useChunkProcessor({
-  maxChunkSize: 10000,
-  useWebWorker: true
+// معالجة بالوكلاء
+const results = await agentCoordinator.processWithAgents(text, {
+  language: 'ar',
+  divideChapters: true,
+  compensate: true,
+  originalWordCount: 50000
 });
 
-const result = await processText(largeText, async (chunk) => {
-  return analyzeChunk(chunk);
-});
+console.log('المراحل:', results.stages);
+console.log('النص النهائي:', results.finalText);
+console.log('Metadata:', results.metadata);
 ```
 
 ---
 
-## 🏗️ البنية المعمارية
+## 📊 الأداء
 
-```
-📦 Seyadi Platform
-├── 🔧 Core System
-│   ├── NLP Engine (5 modules)
-│   ├── Chunk Processor
-│   ├── Cache Manager
-│   └── Web Workers
-├── 🎨 UI Layer
-│   ├── 51 Shadcn Components
-│   ├── Dashboard
-│   ├── Upload System
-│   └── Manuscript Editor
-├── 🔌 API Layer
-│   ├── Base44 Client
-│   ├── Authentication
-│   └── File Management
-└── 📚 Business Logic
-    ├── Text Analyzer
-    ├── Chapter Divider
-    ├── Compliance Engine
-    └── Publishing Standards
-```
+| العملية | الطريقة القديمة | الطريقة الجديدة | التحسين |
+|---------|-----------------|-----------------|---------|
+| استخراج الفصول | 10s (LLM) | 0.1s (Local) | **100x** |
+| كشف الصفحات | 5s (LLM) | 0.05s (Regex) | **100x** |
+| كشف التكرار | 8s (LLM) | 0.2s (Hash) | **40x** |
+| تصنيف المحتوى | 5s (LLM) | 0.1s (Keywords) | **50x** |
+| **إجمالي LLM** | **100%** | **30-40%** | **-60-70%** |
 
 ---
 
-## 🛠️ التقنيات المستخدمة
-
-### Frontend
-- **React 18.3.1** - مكتبة UI
-- **Vite 5.1.4** - أداة البناء
-- **TanStack Query 5.28** - إدارة الحالة
-- **Tailwind CSS 3.4** - التنسيق
-- **Radix UI** - مكونات إمكانية الوصول
-- **Framer Motion** - الحركات
-
-### NLP & Processing
-- **Custom Arabic Tokenizer** - معالجة عربية محلية
-- **Pattern Extractor** - استخراج البنية
-- **Content Classifier** - تصنيف المحتوى
-- **Duplicate Detector** - كشف التكرار (Shingling)
-- **Chapter Divider** - تقسيم ذكي
-
-### Performance
-- **Web Workers** - معالجة خلفية
-- **IndexedDB** - تخزين دائم
-- **Memory Cache** - تخزين سريع
-- **Parallel Processing** - معالجة متوازية
-
----
-
-## 📖 التوثيق الشامل
-
-### الأدلة الرئيسية
-
-| الدليل | الوصف |
-|--------|--------|
-| [📘 NLP System Guide](NLP_SYSTEM_GUIDE.md) | دليل نظام NLP المحلي |
-| [📝 Implementation Summary](IMPLEMENTATION_SUMMARY.md) | ملخص التنفيذ والإنجازات |
-| [💡 Usage Examples](USAGE_EXAMPLES.js) | 10 أمثلة عملية |
-| [🗺️ Upgrade Plan](UPGRADE_PLAN.md) | خطة الترقية الكاملة |
-| [📊 Project Status](PROJECT_STATUS.md) | حالة المشروع |
-
-### وثائق API
-
-```javascript
-// API الرئيسية
-analyzeAndCleanText(text, language, logger)
-quickFileAnalysis(text)
-smartDivideChapters(text, options)
-detectDuplicates(text)
-classifyContent(text)
-```
-
----
-
-## 🧪 الاختبار
-
-### اختبار محلي
+## 🧪 الاختبارات
 
 ```bash
-# اختبار نظام NLP
-node test-nlp-system.js
+# All tests
+npm test
 
-# اختبار البناء
-npm run build
+# Unit tests
+npm run test:unit
 
-# اختبار الإنتاج
+# Integration tests
+npm run test:integration
+
+# Production tests
 npm run test:production
 
-# اختبار مع UI
-npm run test:ui
-
-# تقرير التغطية
+# With coverage
 npm run test:coverage
 ```
 
-### اختبار الأداء
+---
+
+## 🚂 النشر على Railway
+
+### الطريقة السريعة
 
 ```bash
-# قياس السرعة
-npm run benchmark
+# 1. ربط المشروع بـ Railway
+railway login
+railway link
 
-# تحليل الحجم
-npm run analyze
+# 2. إضافة المتغيرات البيئية
+# انسخ من .env.railway إلى Railway Dashboard
+
+# 3. النشر
+git push origin main  # Auto-deploy enabled
 ```
+
+### الطريقة المحلية
+
+```bash
+# Deploy from CLI
+railway up
+```
+
+راجع [دليل النشر الكامل](./RAILWAY_DEPLOYMENT.md)
 
 ---
 
-## 📁 هيكل المشروع
+## 📚 التوثيق
 
-```
-/workspaces/777777777777777777777777777777/
-├── Components/
-│   ├── ui/                    # 51 مكون Shadcn
-│   ├── editor/                # محرر متقدم
-│   ├── upload/                # نظام الرفع
-│   │   ├── TextAnalyzer       # محلل قديم
-│   │   └── TextAnalyzerEnhanced.js  # محلل محسّن
-│   └── Layout.jsx             # التخطيط الرئيسي
-├── Pages/
-│   ├── Dashboard/             # لوحة التحكم
-│   ├── Upload/                # صفحة الرفع
-│   ├── Manuscripts/           # المخطوطات
-│   └── Settings/              # الإعدادات
-├── utils/
-│   ├── nlp/                   # وحدات NLP
-│   │   ├── arabicTokenizer.js
-│   │   ├── patternExtractor.js
-│   │   ├── contentClassifier.js
-│   │   ├── duplicateDetector.js
-│   │   └── chapterDivider.js
-│   └── ChunkProcessor.js      # معالج الأجزاء
-├── lib/
-│   └── cache/
-│       └── CacheManager.js    # إدارة Cache
-├── workers/
-│   └── nlpProcessor.worker.js # Web Worker
-├── hooks/
-│   ├── useWorker.js
-│   ├── useTextAnalysis.js
-│   ├── useChunkProcessor.js
-│   └── useManuscripts.js
-├── api/
-│   └── base44Client.js        # عميل API
-└── contexts/
-    └── AuthContext.jsx        # المصادقة
-```
-
----
-
-## 🎯 الميزات الرئيسية
-
-### 1. معالجة محلية متقدمة
-
-- ✅ **Tokenization** - تقسيم النص العربي
-- ✅ **Pattern Extraction** - استخراج الفصول والصفحات
-- ✅ **Content Classification** - تصنيف 5 أنواع
-- ✅ **Duplicate Detection** - خوارزمية Shingling
-- ✅ **Smart Chapter Division** - تقسيم ذكي 2-13 فصل
-
-### 2. معالجة الملفات الكبيرة
-
-- ✅ دعم حتى **200,000 كلمة**
-- ✅ معالجة متوازية (3 chunks في وقت واحد)
-- ✅ تتبع التقدم في الوقت الفعلي
-- ✅ معالجة خلفية مع Web Workers
-
-### 3. تخزين ذكي
-
-- ✅ **Memory Cache** - سريع (5 دقائق TTL)
-- ✅ **IndexedDB** - دائم (24 ساعة TTL)
-- ✅ تنظيف تلقائي
-- ✅ إحصائيات الاستخدام
-
-### 4. واجهة مستخدم متقدمة
-
-- ✅ 51 مكون Shadcn/UI
-- ✅ RTL كامل للعربية
-- ✅ Dark Mode
-- ✅ Responsive Design
-- ✅ Accessibility
-
----
-
-## 🚢 النشر
-
-### البناء للإنتاج
-
-```bash
-# بناء محسّن
-npm run build
-
-# النتيجة في dist/
-# - index.html
-# - assets/
-#   ├── index-[hash].js (42KB gzipped)
-#   ├── react-vendor-[hash].js (162KB gzipped)
-#   └── index-[hash].css (22KB gzipped)
-```
-
-### النشر على Vercel
-
-```bash
-# تثبيت Vercel CLI
-npm i -g vercel
-
-# النشر
-vercel --prod
-```
+- [📖 دليل النظام الكامل](./SYSTEM_LOGIC_ANALYSIS.md) - تحليل مفصل للمنطق والمعايير
+- [🚀 دليل النشر على Railway](./RAILWAY_DEPLOYMENT.md)
+- [✅ قائمة التحقق للإنتاج](./PRODUCTION_CHECKLIST.md)
+- [🔄 دليل Migration](./MIGRATION_TO_SUPABASE.md)
+- [💡 أمثلة الاستخدام](./USAGE_EXAMPLES.js)
 
 ---
 
 ## 🤝 المساهمة
 
-نرحب بالمساهمات! يرجى اتباع الخطوات التالية:
+نرحب بالمساهمات! يرجى اتباع الخطوات:
 
 1. Fork المشروع
-2. إنشاء فرع للميزة (`git checkout -b feature/AmazingFeature`)
-3. Commit التغييرات (`git commit -m 'Add AmazingFeature'`)
-4. Push للفرع (`git push origin feature/AmazingFeature`)
-5. فتح Pull Request
+2. أنشئ branch جديد (`git checkout -b feature/amazing-feature`)
+3. Commit التغييرات (`git commit -m 'Add amazing feature'`)
+4. Push إلى Branch (`git push origin feature/amazing-feature`)
+5. افتح Pull Request
 
 ---
 
-## 📝 الترخيص
+## 📜 الترخيص
 
-هذا المشروع مرخص تحت رخصة MIT - انظر ملف [LICENSE](LICENSE) للتفاصيل.
-
----
-
-## 👥 الفريق
-
-- **المطور الرئيسي** - [@mrf103](https://github.com/mrf103)
+هذا المشروع مرخص تحت MIT License - راجع [LICENSE](LICENSE) للتفاصيل.
 
 ---
 
-## 📞 الدعم
+## 👨‍💻 المطور
 
-- **Documentation**: [التوثيق الكامل](NLP_SYSTEM_GUIDE.md)
-- **Issues**: [GitHub Issues](https://github.com/mrf103/777777777777777777777777777777/issues)
-- **Examples**: [أمثلة الاستخدام](USAGE_EXAMPLES.js)
+**Firas** - [@mrf103](https://github.com/mrf103)
 
 ---
 
-## 🎉 الإنجازات
+## 🙏 شكر وتقدير
 
-- ✅ **13 ملف جديد** (2,410+ سطر)
-- ✅ **40-100x** تحسين السرعة
-- ✅ **60-70%** توفير التكاليف
-- ✅ **200k كلمة** دعم
-- ✅ **Build ناجح** بدون أخطاء
-- ✅ **توثيق شامل** 100%
-
----
-
-## 📈 خارطة الطريق
-
-### الإصدار الحالي (v2.0)
-- [x] نظام NLP محلي
-- [x] معالجة متوازية
-- [x] Web Workers
-- [x] Cache ذكي
-- [x] اختبارات إنتاج
-
-### الإصدار القادم (v2.1)
-- [ ] ميزات متقدمة
-- [ ] تحسينات أداء
-- [ ] دعم لغات إضافية
-- [ ] API عام
+- [Supabase](https://supabase.com) - Backend as a Service
+- [Google Gemini](https://ai.google.dev) - AI و LLM
+- [Railway](https://railway.app) - Deployment Platform
+- [Shadcn UI](https://ui.shadcn.com) - UI Components
+- [TanStack Query](https://tanstack.com/query) - Data Fetching
 
 ---
 
 <div align="center">
 
-**صُنع بـ ❤️ للمحتوى العربي**
+**صُنع بـ ❤️ في السعودية**
 
 [⬆ العودة للأعلى](#-منصة-سيادي-للنشر---seyadi-publishing-platform)
 

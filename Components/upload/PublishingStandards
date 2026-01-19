@@ -1,7 +1,9 @@
-import { base44 } from "@/api/base44Client";
+import { gemini } from "@/api/geminiClient";
+import { validateLanguageIntegrity } from "@/utils/LanguageValidator";
+import { validateWordCountDelta } from "@/utils/ContentCompensator";
 
 /**
- * معايير النشر الاحترافية
+ * معايير النشر الاحترافية - محدث 2026
  */
 export const PUBLISHING_STANDARDS = {
   // معايير عدد الكلمات حسب النوع
@@ -45,7 +47,19 @@ export function validatePublishingStandards(manuscriptData) {
   const warnings = [];
   const recommendations = [];
   
-  const { word_count, genre, chapters, quality_metrics } = manuscriptData;
+  const { word_count, genre, chapters, quality_metrics, content } = manuscriptData;
+  
+  // ✅ 0. التحقق من سلامة اللغة (جديد)
+  if (content) {
+    const languageCheck = validateLanguageIntegrity(content);
+    if (!languageCheck.passed) {
+      issues.push(...languageCheck.issues.map(i => `🔤 ${i}`));
+      warnings.push(...languageCheck.warnings.map(w => `⚠️ ${w}`));
+    }
+    if (languageCheck.score < 70) {
+      issues.push(`درجة سلامة اللغة منخفضة: ${languageCheck.score}/100`);
+    }
+  }
   
   // 1. التحقق من عدد الكلمات
   if (genre && PUBLISHING_STANDARDS.WORD_COUNT_RANGES[genre]) {
@@ -135,6 +149,11 @@ function calculateQualityScore(manuscriptData) {
   
   if (chapters && chapters.length >= 2 && chapters.length <= 13) {
     score += 5;
+  }
+  
+  // ✅ مكافأة سلامة اللغة (جديد)
+  if (manuscriptData.language_validation?.score >= 90) {
+    score += 10;
   }
   
   return Math.max(0, Math.min(100, score));
