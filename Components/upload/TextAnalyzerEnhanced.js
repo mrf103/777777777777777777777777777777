@@ -3,7 +3,7 @@
  * يستخدم NLP المحلي بدلاً من LLM للعمليات السريعة
  */
 
-import { base44 } from "@/api/base44Client";
+import { gemini } from "@/api/geminiClient";
 import cacheManager from "@/lib/cache/CacheManager";
 import { ChunkProcessor } from "@/utils/ChunkProcessor";
 
@@ -186,9 +186,12 @@ export async function analyzeAndCleanText(rawContent, language = 'ar', logger = 
 ${cleanedText.substring(0, 80000)}
 ---`;
 
-    cleanedText = await base44.integrations.Core.InvokeLLM({
-      prompt: cleaningPrompt
+    const cleaningResult = await gemini.invokeLLM({
+      messages: [{ role: 'user', content: cleaningPrompt }],
+      temperature: 0.3,
+      max_tokens: 80000
     });
+    cleanedText = cleaningResult.output;
   }
   
   const cleanedWordCount = countWords(cleanedText);
@@ -246,29 +249,18 @@ ${cleanedText.substring(0, 100000)}
   ]
 }`;
 
-    const llmChapters = await base44.integrations.Core.InvokeLLM({
-      prompt: chapterPrompt,
-      response_json_schema: {
-        type: "object",
-        properties: {
-          chapters: {
-            type: "array",
-            items: {
-              type: "object",
-              properties: {
-                number: { type: "number" },
-                title: { type: "string" },
-                start_position: { type: "number" },
-                end_position: { type: "number" },
-                summary: { type: "string" }
-              }
-            }
-          }
-        }
-      }
+    const llmResult = await gemini.invokeLLM({
+      messages: [{ role: 'user', content: chapterPrompt }],
+      temperature: 0.5,
+      max_tokens: 4000
     });
     
-    finalChapters = llmChapters.chapters;
+    // استخراج JSON من الرد
+    const llmResponse = llmResult.output;
+    const jsonMatch = llmResponse.match(/\{[\s\S]*\}/);
+    const llmChapters = jsonMatch ? JSON.parse(jsonMatch[0]) : { chapters: [] };
+    
+    finalChapters = llmChapters.chapters || [];
   }
   
   logger?.complete?.('chapter_division', {
@@ -303,9 +295,12 @@ ${cleanedText.substring(0, 50000)}
 
 أعد النص كاملاً مع التحسينات.`;
 
-    compensatedText = await base44.integrations.Core.InvokeLLM({
-      prompt: compensationPrompt
+    const compensationResult = await gemini.invokeLLM({
+      messages: [{ role: 'user', content: compensationPrompt }],
+      temperature: 0.8,
+      max_tokens: 20000
     });
+    compensatedText = compensationResult.output;
   }
   
   const finalWordCount = countWords(compensatedText);

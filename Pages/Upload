@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { db } from "@/api/supabaseClient";
+import FileService from "@/api/fileService";
 import { useNavigate } from "react-router-dom";
 import { createPageUrl } from "@/utils";
 import { motion, AnimatePresence } from "framer-motion";
@@ -94,7 +95,7 @@ export default function Upload() {
   };
 
   const createManuscriptMutation = useMutation({
-    mutationFn: (data) => base44.entities.Manuscript.create(data),
+    mutationFn: (data) => db.manuscripts.create(data),
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["manuscripts"] });
       navigate(createPageUrl(`Manuscripts?id=${data.id}`));
@@ -124,7 +125,7 @@ export default function Upload() {
         progressTracker.updateProgress(newProgress * 0.15); // 15% من إجمالي التقدم
       }, 200);
       
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      const { file_url } = await FileService.uploadFile(file);
       
       clearInterval(progressInterval);
       setUploadProgress(100);
@@ -136,17 +137,7 @@ export default function Upload() {
       progressTracker.updateStage('text_extraction', { stage: 'extracting' });
       setProcessingStage("استخراج النص من الملف...");
       
-      const extractResult = await base44.integrations.Core.ExtractDataFromUploadedFile({
-        file_url,
-        json_schema: {
-          type: "object",
-          properties: {
-            title: { type: "string" },
-            author: { type: "string" },
-            raw_content: { type: "string" }
-          }
-        }
-      });
+      const extractResult = await FileService.extractDataFromFile(file);
       
       if (extractResult.status !== "success" || !extractResult.output?.raw_content) {
         throw new Error("فشل استخراج النص من الملف");
