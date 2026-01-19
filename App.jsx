@@ -9,6 +9,7 @@ const Dashboard = lazy(() => import('@/Pages/Dashboard'))
 const ExportPage = lazy(() => import('@/Pages/ExportPage'))
 const UploadPage = lazy(() => import('@/Pages/UploadPage'))
 const ManuscriptsPage = lazy(() => import('@/Pages/ManuscriptsPage'))
+const EliteEditorPage = lazy(() => import('@/Pages/EliteEditorPage'))
 
 // Loading component
 const PageLoader = () => (
@@ -30,7 +31,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/upload" element={<UploadPage />} />
               <Route path="/manuscripts" element={<ManuscriptsPage />} />
-              <Route path="/elite-editor" element={<div className="p-8 text-center text-muted-foreground">Elite Editor - Coming Soon</div>} />
+              <Route path="/elite-editor/:id" element={<EliteEditorPage />} />
               <Route path="/export" element={<ExportPage />} />
               <Route path="/book-merger" element={<div className="p-8 text-center text-muted-foreground">Book Merger - Coming Soon</div>} />
               <Route path="/cover-designer" element={<div className="p-8 text-center text-muted-foreground">Cover Designer - Coming Soon</div>} />
