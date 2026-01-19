@@ -37,7 +37,9 @@ import { validateFile, FileValidationAlert } from "@/components/upload/FileValid
 import { analyzeAndCleanText, quickFileAnalysis } from "@/components/upload/TextAnalyzerEnhanced";
 import { validatePublishingStandards, generatePublishingReport } from "@/components/upload/PublishingStandards";
 import { ProcessingLogger } from "@/components/upload/ProcessingLogger";
+import { LiveProgressIndicator } from "@/components/upload/LiveProgressIndicator";
 import { useChunkProcessor } from "@/hooks/useChunkProcessor";
+import { useProgressTracker } from "@/hooks/useProgressTracker";
 import { wordCount } from "@/utils/nlp/arabicTokenizer";
 
 export default function Upload() {
@@ -63,6 +65,9 @@ export default function Upload() {
   const [publishingReport, setPublishingReport] = useState(null);
   const [processingLog, setProcessingLog] = useState(null);
   const [isLargeFile, setIsLargeFile] = useState(false);
+  
+  // Initialize Progress Tracker
+  const progressTracker = useProgressTracker();
   
   // Initialize ChunkProcessor hook
   const { processText, processing: chunkProcessing, progress: chunkProgress } = useChunkProcessor({
@@ -99,30 +104,38 @@ export default function Upload() {
   const processFile = async () => {
     if (!file || !fileValidation?.valid) return;
     
-    const logger = new ProcessingLogger(file.name);
+    const logger = progressTracker.createLogger();
+    progressTracker.start();
     
     try {
-      logger.start('file_upload', { fileName: file.name, fileSize: file.size });
+      // المرحلة 1: رفع الملف
+      progressTracker.updateStage('file_upload', { 
+        fileName: file.name, 
+        fileSize: `${(file.size / 1024 / 1024).toFixed(2)} MB` 
+      });
       
       setUploading(true);
       setUploadProgress(0);
       setProcessingStage("رفع الملف...");
       
       const progressInterval = setInterval(() => {
-        setUploadProgress((prev) => Math.min(prev + 10, 90));
+        const newProgress = Math.min(uploadProgress + 10, 90);
+        setUploadProgress(newProgress);
+        progressTracker.updateProgress(newProgress * 0.15); // 15% من إجمالي التقدم
       }, 200);
       
       const { file_url } = await base44.integrations.Core.UploadFile({ file });
       
       clearInterval(progressInterval);
       setUploadProgress(100);
+      progressTracker.updateProgress(15); // رفع الملف اكتمل
       setUploading(false);
       setProcessing(true);
       
-      logger.complete('file_upload', { fileUrl: file_url });
-      
-      // المرحلة 1: استخراج النص الخام
+      // المرحلة 2: استخراج النص
+      progressTracker.updateStage('text_extraction', { stage: 'extracting' });
       setProcessingStage("استخراج النص من الملف...");
+      
       const extractResult = await base44.integrations.Core.ExtractDataFromUploadedFile({
         file_url,
         json_schema: {
@@ -140,20 +153,33 @@ export default function Upload() {
       }
       
       const rawContent = extractResult.output.raw_content;
+      const contentWordCount = wordCount(rawContent);
+      progressTracker.updateProgress(25);
+      progressTracker.updateStageData({ 
+        wordCount: contentWordCount,
+        extracted: true
+      });
       
       // تحقق من حجم الملف
-      const contentWordCount = wordCount(rawContent);
       const isLarge = contentWordCount > 50000;
       setIsLargeFile(isLarge);
       
       if (isLarge) {
         logger.log(`ملف كبير مكتشف: ${contentWordCount} كلمة - سيتم استخدام معالجة متوازية`);
+        progressTracker.updateStageData({ processingMode: 'parallel' });
       }
       
       // المرحلة 2: تحليل سريع
+      progressTracker.updateStage('quick_analysis', { stage: 'local_nlp' });
       setProcessingStage("تحليل أولي للنص...");
       const quick = await quickFileAnalysis(rawContent);
       setQuickAnalysis(quick);
+      progressTracker.updateProgress(35);
+      progressTracker.updateStageData({
+        language: quick.language,
+        hasChapters: quick.hasChapters,
+        chaptersFound: quick.chaptersFound
+      });
       
       // تحديث اللغة المكتشفة
       const detectedLang = quick.language || 'ar';
@@ -166,25 +192,28 @@ export default function Upload() {
       }));
       
       // المرحلة 3: التحليل الكامل والتنظيف
+      progressTracker.updateStage('chunk_processing', { 
+        stage: isLarge ? 'parallel_processing' : 'direct_processing',
+        totalWords: contentWordCount
+      });
+      
       if (isLarge) {
         setProcessingStage(`تحليل وتنظيف النص الكبير (${contentWordCount.toLocaleString('ar')} كلمة)...`);
-        logger.log('استخدام ChunkProcessor للمعالجة المتوازية');
       } else {
         setProcessingStage("تحليل وتنظيف النص...");
       }
       
-      const fullAnalysis = await analyzeAndCleanText(rawContent, detectedLang, {
-        ...logger,
-        progress: (name, data) => {
-          if (data.percentage) {
-            setUploadProgress(data.percentage);
-          }
-          logger.progress?.(name, data);
-        }
-      });
+      const fullAnalysis = await analyzeAndCleanText(rawContent, detectedLang, logger);
       setAnalysisResults(fullAnalysis);
+      progressTracker.updateProgress(75);
+      progressTracker.updateStageData({
+        cleaned: true,
+        finalWordCount: fullAnalysis.final_word_count,
+        chaptersDetected: fullAnalysis.chapters?.length || 0
+      });
       
       // المرحلة 4: إعداد البيانات النهائية
+      progressTracker.updateStage('data_preparation', { stage: 'finalizing' });
       setProcessingStage("إعداد البيانات النهائية...");
       setExtractedData({
         title: extractResult.output.title || "",
@@ -198,8 +227,10 @@ export default function Upload() {
         quality_metrics: fullAnalysis.quality_metrics,
         processing_notes: fullAnalysis.processing_notes
       });
+      progressTracker.updateProgress(85);
       
       // المرحلة 5: التحقق من معايير النشر وتوليد التقرير
+      progressTracker.updateStage('publishing_validation', { stage: 'validating' });
       setProcessingStage("التحقق من معايير النشر...");
       const manuscriptForValidation = {
         title: extractResult.output.title,
@@ -211,22 +242,22 @@ export default function Upload() {
       
       const report = await generatePublishingReport(manuscriptForValidation);
       setPublishingReport(report);
-      
-      logger.complete('publishing_validation', { 
-        passed: report.passed,
-        qualityScore: report.quality_score 
+      progressTracker.updateProgress(100);
+      progressTracker.updateStageData({
+        validated: true,
+        qualityScore: report.quality_score,
+        passed: report.passed
       });
       
       setProcessing(false);
       setProcessingStage("");
-      setProcessingLog(logger.export());
+      progressTracker.complete();
       
     } catch (error) {
-      logger?.error('processing', error);
+      progressTracker.error(`خطأ: ${error.message}`);
       setProcessing(false);
       setUploading(false);
       setProcessingStage("");
-      setProcessingLog(logger?.export());
       alert(`خطأ في معالجة الملف: ${error.message}`);
     }
   };
@@ -407,6 +438,26 @@ export default function Upload() {
             className="mt-4"
           >
             <FileValidationAlert validation={fileValidation} />
+          </motion.div>
+        )}
+        
+        {/* Live Progress Indicator */}
+        {(uploading || processing) && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-6"
+          >
+            <LiveProgressIndicator
+              currentStage={progressTracker.currentStage}
+              progress={progressTracker.progress}
+              stageData={progressTracker.stageData}
+              isComplete={progressTracker.isComplete}
+              hasError={progressTracker.hasError}
+              errorMessage={progressTracker.errorMessage}
+              elapsedTime={progressTracker.elapsedTime}
+              estimatedTime={progressTracker.estimatedTime}
+            />
           </motion.div>
         )}
       </motion.div>

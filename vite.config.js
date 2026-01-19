@@ -21,10 +21,31 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    host: true, // للسماح بالوصول من خارج localhost
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp'
+    }
+  },
+  preview: {
+    port: process.env.PORT || 3000,
+    host: '0.0.0.0', // مهم لـ Railway
+    strictPort: false,
+    headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp'
+    }
   },
   build: {
     outDir: 'dist',
-    sourcemap: true,
+    sourcemap: process.env.NODE_ENV !== 'production',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: process.env.NODE_ENV === 'production',
+        drop_debugger: true
+      }
+    },
     rollupOptions: {
       output: {
         manualChunks: {
@@ -32,8 +53,27 @@ export default defineConfig({
           'ui-vendor': ['framer-motion', 'lucide-react'],
           'query-vendor': ['@tanstack/react-query'],
           'chart-vendor': ['recharts'],
+          'nlp-utils': [
+            '@/utils/nlp/arabicTokenizer',
+            '@/utils/nlp/patternExtractor',
+            '@/utils/nlp/contentClassifier',
+            '@/utils/nlp/duplicateDetector',
+            '@/utils/nlp/chapterDivider'
+          ]
         },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]'
       },
     },
+    chunkSizeWarningLimit: 1000,
   },
+  optimizeDeps: {
+    include: [
+      'react',
+      'react-dom',
+      'react-router-dom',
+      '@tanstack/react-query'
+    ]
+  }
 })

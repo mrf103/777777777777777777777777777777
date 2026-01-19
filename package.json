@@ -10,6 +10,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
+    "preview:host": "vite preview --host 0.0.0.0 --port $PORT",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext js,jsx --fix",
     "format": "prettier --write \"**/*.{js,jsx,json,css,md}\"",
@@ -19,7 +20,9 @@
     "test:coverage": "vitest --coverage",
     "test:production": "vitest run tests/production.test.js",
     "benchmark": "node tests/benchmark.js",
-    "analyze": "vite-bundle-visualizer"
+    "analyze": "vite-bundle-visualizer",
+    "railway:check": "bash scripts/check-railway-ready.sh",
+    "railway:deploy": "npm run build && npm run preview:host"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -87,6 +90,7 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
+    "terser": "^5.46.0",
     "vite": "^5.1.4",
     "vitest": "^4.0.17"
   },
