@@ -34,9 +34,11 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { validateFile, FileValidationAlert } from "@/components/upload/FileValidator";
-import { analyzeAndCleanText, quickFileAnalysis } from "@/components/upload/TextAnalyzer";
+import { analyzeAndCleanText, quickFileAnalysis } from "@/components/upload/TextAnalyzerEnhanced";
 import { validatePublishingStandards, generatePublishingReport } from "@/components/upload/PublishingStandards";
 import { ProcessingLogger } from "@/components/upload/ProcessingLogger";
+import { useChunkProcessor } from "@/hooks/useChunkProcessor";
+import { wordCount } from "@/utils/nlp/arabicTokenizer";
 
 export default function Upload() {
   const navigate = useNavigate();
@@ -60,6 +62,13 @@ export default function Upload() {
   const [analysisResults, setAnalysisResults] = useState(null);
   const [publishingReport, setPublishingReport] = useState(null);
   const [processingLog, setProcessingLog] = useState(null);
+  const [isLargeFile, setIsLargeFile] = useState(false);
+  
+  // Initialize ChunkProcessor hook
+  const { processText, processing: chunkProcessing, progress: chunkProgress } = useChunkProcessor({
+    maxChunkSize: 10000,
+    useWebWorker: true
+  });
 
   const handleFileDrop = useCallback((e) => {
     e.preventDefault();
@@ -132,6 +141,15 @@ export default function Upload() {
       
       const rawContent = extractResult.output.raw_content;
       
+      // تحقق من حجم الملف
+      const contentWordCount = wordCount(rawContent);
+      const isLarge = contentWordCount > 50000;
+      setIsLargeFile(isLarge);
+      
+      if (isLarge) {
+        logger.log(`ملف كبير مكتشف: ${contentWordCount} كلمة - سيتم استخدام معالجة متوازية`);
+      }
+      
       // المرحلة 2: تحليل سريع
       setProcessingStage("تحليل أولي للنص...");
       const quick = await quickFileAnalysis(rawContent);
@@ -148,8 +166,22 @@ export default function Upload() {
       }));
       
       // المرحلة 3: التحليل الكامل والتنظيف
-      setProcessingStage("تحليل وتنظيف النص (قد يستغرق دقائق)...");
-      const fullAnalysis = await analyzeAndCleanText(rawContent, detectedLang, logger);
+      if (isLarge) {
+        setProcessingStage(`تحليل وتنظيف النص الكبير (${contentWordCount.toLocaleString('ar')} كلمة)...`);
+        logger.log('استخدام ChunkProcessor للمعالجة المتوازية');
+      } else {
+        setProcessingStage("تحليل وتنظيف النص...");
+      }
+      
+      const fullAnalysis = await analyzeAndCleanText(rawContent, detectedLang, {
+        ...logger,
+        progress: (name, data) => {
+          if (data.percentage) {
+            setUploadProgress(data.percentage);
+          }
+          logger.progress?.(name, data);
+        }
+      });
       setAnalysisResults(fullAnalysis);
       
       // المرحلة 4: إعداد البيانات النهائية
