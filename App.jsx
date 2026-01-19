@@ -8,6 +8,7 @@ import ToastProvider from '@/Components/ToastProvider'
 const Dashboard = lazy(() => import('@/Pages/Dashboard'))
 const ExportPage = lazy(() => import('@/Pages/ExportPage'))
 const UploadPage = lazy(() => import('@/Pages/UploadPage'))
+const ManuscriptsPage = lazy(() => import('@/Pages/ManuscriptsPage'))
 
 // Loading component
 const PageLoader = () => (
@@ -28,7 +29,7 @@ function App() {
             <Route element={<Layout />}>
               <Route path="/" element={<Dashboard />} />
               <Route path="/upload" element={<UploadPage />} />
-              <Route path="/manuscripts" element={<div className="p-8 text-center text-muted-foreground">Manuscripts Page - Coming Soon</div>} />
+              <Route path="/manuscripts" element={<ManuscriptsPage />} />
               <Route path="/elite-editor" element={<div className="p-8 text-center text-muted-foreground">Elite Editor - Coming Soon</div>} />
               <Route path="/export" element={<ExportPage />} />
               <Route path="/book-merger" element={<div className="p-8 text-center text-muted-foreground">Book Merger - Coming Soon</div>} />
