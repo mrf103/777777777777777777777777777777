@@ -1,22 +1,44 @@
 import { Routes, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import Layout from '@/Components/Layout'
-import Dashboard from '@/Pages/Dashboard'
-import ExportPage from '@/Pages/ExportPage'
+import ErrorBoundary from '@/Components/ErrorBoundary'
+import ToastProvider from '@/Components/ToastProvider'
+
+// Lazy loading للصفحات الثقيلة
+const Dashboard = lazy(() => import('@/Pages/Dashboard'))
+const ExportPage = lazy(() => import('@/Pages/ExportPage'))
+const UploadPage = lazy(() => import('@/Pages/UploadPage'))
+
+// Loading component
+const PageLoader = () => (
+  <div className="min-h-screen bg-shadow-bg flex items-center justify-center">
+    <div className="text-center space-y-4">
+      <div className="w-16 h-16 mx-auto border-4 border-shadow-accent border-t-transparent rounded-full animate-spin" />
+      <p className="text-shadow-text/60">جاري التحميل...</p>
+    </div>
+  </div>
+)
 
 function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/upload" element={<div className="p-8 text-center text-muted-foreground">Upload Page - Coming Soon</div>} />
-        <Route path="/manuscripts" element={<div className="p-8 text-center text-muted-foreground">Manuscripts Page - Coming Soon</div>} />
-        <Route path="/elite-editor" element={<div className="p-8 text-center text-muted-foreground">Elite Editor - Coming Soon</div>} />
-        <Route path="/export" element={<ExportPage />} />
-        <Route path="/book-merger" element={<div className="p-8 text-center text-muted-foreground">Book Merger - Coming Soon</div>} />
-        <Route path="/cover-designer" element={<div className="p-8 text-center text-muted-foreground">Cover Designer - Coming Soon</div>} />
-        <Route path="/settings" element={<div className="p-8 text-center text-muted-foreground">Settings - Coming Soon</div>} />
-      </Route>
-    </Routes>
+    <ErrorBoundary>
+      <ToastProvider>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/upload" element={<UploadPage />} />
+              <Route path="/manuscripts" element={<div className="p-8 text-center text-muted-foreground">Manuscripts Page - Coming Soon</div>} />
+              <Route path="/elite-editor" element={<div className="p-8 text-center text-muted-foreground">Elite Editor - Coming Soon</div>} />
+              <Route path="/export" element={<ExportPage />} />
+              <Route path="/book-merger" element={<div className="p-8 text-center text-muted-foreground">Book Merger - Coming Soon</div>} />
+              <Route path="/cover-designer" element={<div className="p-8 text-center text-muted-foreground">Cover Designer - Coming Soon</div>} />
+              <Route path="/settings" element={<div className="p-8 text-center text-muted-foreground">Settings - Coming Soon</div>} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </ToastProvider>
+    </ErrorBoundary>
   )
 }
 
