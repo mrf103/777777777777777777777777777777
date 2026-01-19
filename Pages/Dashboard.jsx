@@ -5,7 +5,7 @@ import { Badge } from '@/Components/ui/badge'
 import { Button } from '@/Components/ui/button'
 import { Progress } from '@/Components/ui/progress'
 import { Link } from 'react-router-dom'
-import apiClient from '@/api'
+import { apiClient } from '@/api'
 
 export default function Dashboard() {
   const { data: stats, isLoading } = useQuery({

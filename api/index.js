@@ -57,4 +57,29 @@ export const api = {
   }
 }
 
+// API Client للـ Dashboard
+export const apiClient = {
+  getDashboardStats: async () => {
+    try {
+      const manuscripts = await db.manuscripts.list()
+      
+      return {
+        totalManuscripts: manuscripts.length,
+        processing: manuscripts.filter(m => m.status === 'processing').length,
+        completed: manuscripts.filter(m => m.status === 'completed').length,
+        needsReview: manuscripts.filter(m => m.status === 'needs_review').length
+      }
+    } catch (error) {
+      console.error('Error fetching dashboard stats:', error)
+      // Return default stats if error
+      return {
+        totalManuscripts: 0,
+        processing: 0,
+        completed: 0,
+        needsReview: 0
+      }
+    }
+  }
+}
+
 export default api
