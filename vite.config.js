@@ -19,7 +19,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    port: 5001,
     open: true,
     host: true, // للسماح بالوصول من خارج localhost
     headers: {

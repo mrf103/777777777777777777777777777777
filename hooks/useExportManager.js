@@ -8,9 +8,9 @@
  * - تتبع التقدم والحالة
  */
 
-import { useState, useCallback } from 'react';
-import ExportModule from '../utils/export/ExportModule';
-import AgentCoordinator from '../utils/SpecializedAgents';
+import { useState, useCallback, useMemo } from 'react';
+import { ExportModule } from '../utils/export/ExportModule';
+import { AgentCoordinator } from '../utils/SpecializedAgents';
 
 const useExportManager = () => {
   const [state, setState] = useState({
@@ -22,8 +22,8 @@ const useExportManager = () => {
     error: null
   });
 
-  const exportModule = new ExportModule();
-  const agentCoordinator = new AgentCoordinator();
+  const exportModule = useMemo(() => new ExportModule(), []);
+  const agentCoordinator = useMemo(() => new AgentCoordinator(), []);
 
   /**
    * تحديث التقدم
