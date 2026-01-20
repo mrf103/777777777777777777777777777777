@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [react()],
   resolve: {
     alias: {
@@ -30,11 +30,7 @@ export default defineConfig({
   preview: {
     port: process.env.PORT || 5001,
     host: true,
-    strictPort: false,
-    headers: {
-      'Cross-Origin-Opener-Policy': 'same-origin',
-      'Cross-Origin-Embedder-Policy': 'require-corp'
-    }
+    strictPort: false
   },
   build: {
     outDir: 'dist',
@@ -76,4 +72,4 @@ export default defineConfig({
       '@tanstack/react-query'
     ]
   }
-})
+}))
