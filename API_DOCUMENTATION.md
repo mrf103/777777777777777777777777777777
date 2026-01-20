@@ -873,13 +873,12 @@ function MyComponent() {
 
 ```bash
 # Required
-VITE_GEMINI_API_KEY=your-api-key
+VITE_GOOGLE_AI_API_KEY=your-google-ai-api-key
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 
 # Optional
-VITE_SUPABASE_URL=your-supabase-url
-VITE_SUPABASE_ANON_KEY=your-supabase-key
-VITE_MAX_FILE_SIZE=52428800  # 50MB
-VITE_CACHE_TTL=86400000      # 24 hours
+VITE_MAX_FILE_SIZE=52428800  # 50MB default
 ```
 
 ---

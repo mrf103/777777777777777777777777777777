@@ -181,13 +181,12 @@ export async function generatePublishingReport(manuscriptData) {
 
 قدم تقييماً مهنياً مع توصيات عملية للتحسين.`;
 
-  const report = await base44.integrations.Core.InvokeLLM({
-    prompt: reportPrompt
-  });
-
+  // Note: Professional assessment via AI is disabled in current version
+  // Use Gemini client if needed: import { gemini } from '@/api'
+  
   return {
     ...validation,
-    professional_assessment: report,
+    professional_assessment: null,
     generated_at: new Date().toISOString()
   };
 }

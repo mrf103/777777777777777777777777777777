@@ -159,7 +159,9 @@ npm install
 
 # 3. إعداد المتغيرات البيئية
 cp .env.example .env
-# قم بتعديل .env وإضافة API Keys
+# للتطوير المحلي يفضل استخدام:
+# cp .env.local.example .env.local
+# ثم عدل القيم وأضف مفاتيحك
 
 # 4. تشغيل Development Server
 npm run dev
@@ -171,12 +173,23 @@ npm run dev
 ### المتغيرات البيئية المطلوبة
 
 ```bash
-# Supabase (اختياري)
+# Supabase (مطلوب للإنتاج وللتخزين)
 VITE_SUPABASE_URL=your-supabase-url
-VITE_SUPABASE_ANON_KEY=your-supabase-key
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 
 # Google Gemini AI
-VITE_GEMINI_API_KEY=your-gemini-api-key
+VITE_GOOGLE_AI_API_KEY=your-google-ai-api-key
+
+# API Base (اختياري إذا كنت تستخدم خادم خارجي)
+VITE_API_BASE_URL=https://api.shadowseven.com
+VITE_API_VERSION=v1
+VITE_API_TIMEOUT=30000
+
+# Railway (أمر مفيد لضبط المتغيرات على البيئة المستضافة)
+# railway variables set \
+#   VITE_SUPABASE_URL=... \
+#   VITE_SUPABASE_ANON_KEY=... \
+#   VITE_GOOGLE_AI_API_KEY=... 
 ```
 
 ---

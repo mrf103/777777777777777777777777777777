@@ -20,16 +20,12 @@ VITE_API_BASE_URL=https://api.seyadi.com
 VITE_API_VERSION=v1
 VITE_API_TIMEOUT=30000
 
-# Base44 Integration (Required)
-VITE_BASE44_API_KEY=your_actual_base44_api_key
-VITE_BASE44_PROJECT_ID=your_actual_project_id
-VITE_BASE44_ENDPOINT=https://api.base44.com
+# Supabase Configuration (Required)
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
-# LLM Configuration (Required for AI features)
-VITE_LLM_MODEL=gpt-4
-VITE_LLM_TEMPERATURE=0.7
-VITE_LLM_MAX_TOKENS=4000
-VITE_LLM_API_KEY=your_actual_openai_api_key
+# Google AI Configuration (Required for AI features)
+VITE_GOOGLE_AI_API_KEY=your_google_ai_api_key
 
 # Feature Flags (Optional)
 VITE_ENABLE_DARK_MODE=true

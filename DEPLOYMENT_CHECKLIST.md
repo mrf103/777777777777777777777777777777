@@ -20,12 +20,12 @@
 ### 3. المتغيرات البيئية المطلوبة
 
 #### متغيرات إلزامية:
-- [ ] `VITE_API_BASE_URL` - عنوان API الأساسي
-- [ ] `VITE_BASE44_API_KEY` - مفتاح Base44 API
-- [ ] `VITE_BASE44_PROJECT_ID` - معرف مشروع Base44
-- [ ] `VITE_LLM_API_KEY` - مفتاح OpenAI/LLM
+- [ ] `VITE_SUPABASE_URL` - عنوان مشروع Supabase
+- [ ] `VITE_SUPABASE_ANON_KEY` - مفتاح Supabase العام
+- [ ] `VITE_GOOGLE_AI_API_KEY` - مفتاح Google Gemini AI
 
 #### متغيرات اختيارية:
+- [ ] `VITE_API_BASE_URL` - عنوان API الأساسي (اختياري)
 - [ ] `VITE_ENABLE_DARK_MODE`
 - [ ] `VITE_ENABLE_AI_SUGGESTIONS`
 - [ ] `VITE_ENABLE_ANALYTICS`

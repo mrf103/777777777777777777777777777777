@@ -12,7 +12,7 @@ vi.mock('import.meta', () => ({
   env: {
     VITE_SUPABASE_URL: 'https://test.supabase.co',
     VITE_SUPABASE_ANON_KEY: 'test-key',
-    VITE_GEMINI_API_KEY: 'test-gemini-key',
+    VITE_GOOGLE_AI_API_KEY: 'test-google-ai-key',
   },
 }));
 
