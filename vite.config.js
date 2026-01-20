@@ -29,8 +29,12 @@ export default defineConfig({
   },
   preview: {
     port: process.env.PORT || 5001,
-    host: '0.0.0.0', // مهم لـ Railway
+    host: '0.0.0.0',
     strictPort: false,
+    allowedHosts: [
+      'shadow-seven-production-production.up.railway.app',
+      '.up.railway.app'
+    ],
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp'
