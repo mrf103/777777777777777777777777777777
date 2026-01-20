@@ -16,13 +16,12 @@ const CoverDesignerPage = lazy(() => import('@/Pages/CoverDesignerPage'))
 const SettingsPage = lazy(() => import('@/Pages/SettingsPage'))
 const AnalyticsDashboardPage = lazy(() => import('@/Pages/AnalyticsDashboardPage'))
 
+import LoadingSpinner from '@/Components/LoadingSpinner'
+
 // Loading component
 const PageLoader = () => (
   <div className="min-h-screen bg-shadow-bg flex items-center justify-center">
-    <div className="text-center space-y-4">
-      <div className="w-16 h-16 mx-auto border-4 border-shadow-accent border-t-transparent rounded-full animate-spin" />
-      <p className="text-shadow-text/60">جاري التحميل...</p>
-    </div>
+    <LoadingSpinner size="md" text="جاري التحميل..." />
   </div>
 )
 

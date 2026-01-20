@@ -18,7 +18,6 @@ const navigation = [
   { name: 'لوحة التحكم', href: '/', icon: LayoutDashboard },
   { name: 'رفع مخطوط', href: '/upload', icon: Upload },
   { name: 'المخطوطات', href: '/manuscripts', icon: FileText },
-  { name: 'المحرر النخبوي', href: '/elite-editor', icon: Sparkles },
   { name: 'تصدير ⚡ Agency', href: '/export', icon: FileDown },
   { name: 'دمج الكتب', href: '/book-merger', icon: BookOpen },
   { name: 'الإعدادات', href: '/settings', icon: Settings },
