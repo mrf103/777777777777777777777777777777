@@ -32,6 +32,9 @@ import { useToast } from '../Components/ToastProvider';
 import { useManuscripts } from '../hooks/useManuscripts';
 import LoadingSpinner from '../Components/LoadingSpinner';
 import ErrorDisplay from '../Components/ErrorDisplay';
+import StatCard from '../Components/StatCard';
+import Card from '../Components/Card';
+import PageContainer, { PageContent, PageHeader } from '../Components/PageContainer';
 
 const ManuscriptsPage = () => {
   const navigate = useNavigate();
@@ -146,54 +149,54 @@ const ManuscriptsPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-shadow-bg p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <PageContainer>
+      <PageContent>
         {/* العنوان والإحصائيات */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold text-shadow-text cyber-text">
-              مخطوطاتي
-            </h1>
-            <p className="text-shadow-text/60 mt-2">
-              إدارة ومتابعة جميع أعمالك الأدبية
-            </p>
-          </div>
-
-          <button
-            onClick={handleNewManuscript}
-            className="cyber-button bg-shadow-accent px-6 py-3 rounded-lg hover:shadow-glow transition-all flex items-center gap-2"
-          >
-            <Plus className="w-5 h-5" />
-            مخطوط جديد
-          </button>
-        </div>
+        <PageHeader 
+          title="مخطوطاتي"
+          subtitle="إدارة ومتابعة جميع أعمالك الأدبية"
+          action={
+            <button
+              onClick={handleNewManuscript}
+              className="cyber-button bg-shadow-accent px-6 py-3 rounded-lg hover:shadow-glow transition-all flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              مخطوط جديد
+            </button>
+          }
+        />
 
         {/* بطاقات الإحصائيات */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           <StatCard
-            icon={<BookOpen className="w-6 h-6 text-shadow-accent" />}
+            icon={<BookOpen className="w-6 h-6" />}
             label="إجمالي المخطوطات"
             value={stats.total.toLocaleString()}
+            color="default"
           />
           <StatCard
-            icon={<Edit className="w-6 h-6 text-blue-500" />}
+            icon={<Edit className="w-6 h-6" />}
             label="مسودات"
             value={stats.draft.toLocaleString()}
+            color="blue"
           />
           <StatCard
-            icon={<Clock className="w-6 h-6 text-yellow-500" />}
+            icon={<Clock className="w-6 h-6" />}
             label="قيد المعالجة"
             value={stats.processing.toLocaleString()}
+            color="yellow"
           />
           <StatCard
-            icon={<CheckCircle className="w-6 h-6 text-green-500" />}
+            icon={<CheckCircle className="w-6 h-6" />}
             label="مكتملة"
             value={stats.completed.toLocaleString()}
+            color="green"
           />
           <StatCard
-            icon={<TrendingUp className="w-6 h-6 text-purple-500" />}
+            icon={<TrendingUp className="w-6 h-6" />}
             label="إجمالي الكلمات"
             value={(stats.totalWords / 1000).toFixed(1) + 'K'}
+            color="default"
           />
         </div>
 
@@ -287,28 +290,13 @@ const ManuscriptsPage = () => {
             ))}
           </div>
         )}
-      </div>
 
       {/* Cyber Grid Background */}
       <div className="fixed inset-0 pointer-events-none opacity-10 cyber-grid -z-10" />
-    </div>
+      </PageContent>
+    </PageContainer>
   );
 };
-
-// بطاقة الإحصائية
-const StatCard = ({ icon, label, value }) => (
-  <div className="cyber-card bg-shadow-surface rounded-lg border border-shadow-primary/20 p-4">
-    <div className="flex items-center gap-3">
-      <div className="p-2 bg-shadow-bg rounded-lg">
-        {icon}
-      </div>
-      <div>
-        <div className="text-sm text-shadow-text/60">{label}</div>
-        <div className="text-2xl font-bold text-shadow-text">{value}</div>
-      </div>
-    </div>
-  </div>
-);
 
 // بطاقة المخطوط
 const ManuscriptCard = ({ manuscript, viewMode, onView, onEdit, onExport, onDelete }) => {
