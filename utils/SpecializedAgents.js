@@ -359,13 +359,11 @@ class AgentCoordinator {
     
     try {
       // المرحلة 1: التحليل البنيوي
-      console.log('🔍 Agent 1: التحليل البنيوي...');
       const structural = await this.agents.structural.analyze(text);
       results.stages.push({ stage: 'structural_analysis', data: structural });
       results.metadata.structural = structural;
       
       // المرحلة 2: التنظيف اللغوي
-      console.log('🧹 Agent 2: التنظيف اللغوي...');
       const cleaned = await this.agents.linguistic.clean(
         text,
         structural,
@@ -375,14 +373,12 @@ class AgentCoordinator {
       results.finalText = cleaned;
       
       // المرحلة 3: مراقبة الجودة
-      console.log('✅ Agent 3: مراقبة الجودة...');
       const quality = await this.agents.quality.inspect(cleaned);
       results.stages.push({ stage: 'quality_control', data: quality });
       results.metadata.quality = quality;
       
       // المرحلة 4: تقسيم الفصول (إذا طُلب)
       if (options.divideChapters !== false) {
-        console.log('📖 Agent 4: تقسيم الفصول...');
         const chapters = await this.agents.chapter.divide(cleaned);
         results.stages.push({ stage: 'chapter_division', data: chapters });
         results.metadata.chapters = chapters.chapters;
@@ -395,7 +391,6 @@ class AgentCoordinator {
         const deficitPct = (deficit / options.originalWordCount) * 100;
         
         if (deficitPct > 10) {
-          console.log('💡 Agent 5: توليد التكملات...');
           const compensation = await this.agents.compensation.generate(
             options.context || {},
             deficit,
@@ -419,7 +414,6 @@ class AgentCoordinator {
    * يولد: محتوى تسويقي + سوشال ميديا + سكريبتات + تصميم أغلفة
    */
   async generateAgencyPackage(manuscript, options = {}) {
-    console.log('🚀 بدء توليد حزمة Agency in a Box...');
     
     const results = {
       manuscript: {
@@ -440,7 +434,6 @@ class AgentCoordinator {
       
       // المرحلة 1: معالجة النص الأساسية (الوكلاء الأصليين)
       if (options.processText !== false) {
-        console.log('📝 معالجة النص الأساسية...');
         const processed = await this.processWithAgents(manuscript.content, {
           language: 'ar',
           divideChapters: true,
@@ -460,33 +453,28 @@ class AgentCoordinator {
       
       // المرحلة 2: توليد المحتوى التسويقي
       if (options.includeMarketing !== false) {
-        console.log('📢 Agent 6: توليد المحتوى التسويقي...');
         const marketing = await agents.marketing.generateMarketingPackage(manuscript);
         results.marketing = marketing;
       }
       
       // المرحلة 3: توليد محتوى السوشال ميديا
       if (options.includeSocialMedia !== false) {
-        console.log('📱 Agent 7: توليد محتوى السوشال ميديا...');
         const social = await agents.socialMedia.generateSocialMediaPackage(manuscript);
         results.socialMedia = social;
       }
       
       // المرحلة 4: توليد السكريبتات الإعلامية
       if (options.includeMediaScripts !== false) {
-        console.log('🎬 Agent 8: توليد السكريبتات الإعلامية...');
         const scripts = await agents.mediaScript.generateMediaScriptPackage(manuscript);
         results.mediaScripts = scripts;
       }
       
       // المرحلة 5: توليد تصاميم الأغلفة
       if (options.includeCoverDesign !== false) {
-        console.log('🎨 Agent 9: توليد تصاميم الأغلفة...');
         const covers = await agents.coverDesign.generateCoverDesignPackage(manuscript);
         results.coverDesign = covers;
       }
       
-      console.log('✅ اكتملت حزمة Agency in a Box بنجاح!');
       
       return {
         success: true,

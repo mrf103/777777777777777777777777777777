@@ -23,7 +23,7 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     // تسجيل الخطأ (يمكن إرساله لـ Sentry أو خدمة أخرى)
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    // console.error('ErrorBoundary caught an error:', error, errorInfo);
     
     this.setState({
       error,
