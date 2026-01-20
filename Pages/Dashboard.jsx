@@ -61,7 +61,7 @@ export default function Dashboard() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">لوحة التحكم</h1>
-          <p className="text-muted-foreground">مرحباً بك في منصة سيادي للنشر</p>
+          <p className="text-muted-foreground">مرحباً بك في Shadow Seven - Agency in a Box</p>
         </div>
         <Link to="/upload">
           <Button>

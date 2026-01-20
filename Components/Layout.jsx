@@ -36,7 +36,7 @@ export default function Layout() {
           <div className="fixed inset-0 bg-black/50" onClick={() => setSidebarOpen(false)} />
           <div className="fixed inset-y-0 right-0 w-64 bg-card border-l">
             <div className="flex items-center justify-between p-4 border-b">
-              <h1 className="text-xl font-bold text-primary">منصة سيادي</h1>
+            <h1 className="text-xl font-bold text-primary">Shadow Seven</h1>
               <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(false)}>
                 <X className="h-5 w-5" />
               </Button>
@@ -69,7 +69,7 @@ export default function Layout() {
       {/* Desktop sidebar */}
       <aside className="hidden lg:fixed lg:inset-y-0 lg:right-0 lg:w-64 lg:flex lg:flex-col border-l bg-card">
         <div className="flex items-center justify-center h-16 border-b">
-          <h1 className="text-xl font-bold text-primary">منصة سيادي للنشر</h1>
+          <h1 className="text-xl font-bold text-primary">Shadow Seven</h1>
         </div>
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {navigation.map((item) => {
@@ -93,7 +93,7 @@ export default function Layout() {
         </nav>
         <div className="p-4 border-t">
           <p className="text-xs text-muted-foreground text-center">
-            © 2024 منصة سيادي للنشر
+            © 2024 Shadow Seven - Agency in a Box
           </p>
         </div>
       </aside>
@@ -105,7 +105,7 @@ export default function Layout() {
           <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(true)}>
             <Menu className="h-5 w-5" />
           </Button>
-          <h1 className="text-lg font-bold text-primary">سيادي</h1>
+          <h1 className="text-lg font-bold text-primary">Shadow Seven</h1>
           <div className="w-10" /> {/* Spacer for centering */}
         </header>
 

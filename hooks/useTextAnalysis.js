@@ -3,7 +3,7 @@
  */
 
 import { useState, useCallback } from 'react';
-import { analyzeAndCleanText } from '@/Components/upload/TextAnalyzer';
+import { analyzeAndCleanText } from '@/Components/upload/TextAnalyzerEnhanced';
 import cacheManager from '@/lib/cache/CacheManager';
 
 export function useTextAnalysis() {
