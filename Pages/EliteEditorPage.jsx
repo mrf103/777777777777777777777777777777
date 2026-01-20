@@ -195,10 +195,7 @@ const EliteEditorPage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-shadow-bg flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <Loader2 className="w-16 h-16 mx-auto text-shadow-accent animate-spin" />
-          <p className="text-shadow-text/60">جاري تحميل المحرر...</p>
-        </div>
+        <LoadingSpinner size="lg" text="جاري تحميل المحرر..." />
       </div>
     );
   }
@@ -206,16 +203,13 @@ const EliteEditorPage = () => {
   if (!manuscript) {
     return (
       <div className="min-h-screen bg-shadow-bg flex items-center justify-center p-6">
-        <div className="text-center space-y-4">
-          <AlertCircle className="w-16 h-16 mx-auto text-red-500" />
-          <h2 className="text-2xl font-bold text-shadow-text">المخطوط غير موجود</h2>
-          <button
-            onClick={() => navigate('/manuscripts')}
-            className="cyber-button bg-shadow-accent px-6 py-3 rounded hover:shadow-glow transition-all"
-          >
-            العودة للمخطوطات
-          </button>
-        </div>
+        <EmptyState
+          icon={AlertCircle}
+          title="المخطوط غير موجود"
+          description="لم نتمكن من العثور على المخطوط المطلوب"
+          action={() => navigate('/manuscripts')}
+          actionLabel="العودة للمخطوطات"
+        />
       </div>
     );
   }

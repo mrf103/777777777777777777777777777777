@@ -30,6 +30,8 @@ import {
 } from 'lucide-react';
 import { useToast } from '../Components/ToastProvider';
 import { useManuscripts } from '../hooks/useManuscripts';
+import LoadingSpinner from '../Components/LoadingSpinner';
+import ErrorDisplay from '../Components/ErrorDisplay';
 
 const ManuscriptsPage = () => {
   const navigate = useNavigate();
@@ -125,10 +127,7 @@ const ManuscriptsPage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-shadow-bg flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 mx-auto border-4 border-shadow-accent border-t-transparent rounded-full animate-spin" />
-          <p className="text-shadow-text/60">جاري التحميل...</p>
-        </div>
+        <LoadingSpinner size="lg" text="جاري تحميل المخطوطات..." />
       </div>
     );
   }
@@ -137,17 +136,11 @@ const ManuscriptsPage = () => {
   if (isError) {
     return (
       <div className="min-h-screen bg-shadow-bg flex items-center justify-center p-6">
-        <div className="text-center space-y-4 max-w-md">
-          <AlertCircle className="w-16 h-16 mx-auto text-red-500" />
-          <h2 className="text-2xl font-bold text-shadow-text">حدث خطأ</h2>
-          <p className="text-shadow-text/60">فشل تحميل المخطوطات</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="cyber-button bg-shadow-accent px-6 py-2 rounded hover:shadow-glow transition-all"
-          >
-            إعادة المحاولة
-          </button>
-        </div>
+        <ErrorDisplay 
+          title="حدث خطأ"
+          message="فشل تحميل المخطوطات. يرجى المحاولة مرة أخرى."
+          onRetry={() => window.location.reload()}
+        />
       </div>
     );
   }

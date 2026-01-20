@@ -6,6 +6,7 @@ import { Button } from '@/Components/ui/button'
 import { Progress } from '@/Components/ui/progress'
 import { Link } from 'react-router-dom'
 import { apiClient } from '@/api'
+import LoadingSpinner from '@/Components/LoadingSpinner'
 
 export default function Dashboard() {
   const { data: stats, isLoading } = useQuery({
@@ -47,10 +48,7 @@ export default function Dashboard() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">جاري التحميل...</p>
-        </div>
+        <LoadingSpinner size="md" text="جاري التحميل..." />
       </div>
     )
   }

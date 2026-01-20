@@ -33,6 +33,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '../Components/ToastProvider';
 import { useManuscripts } from '../hooks/useManuscripts';
+import LoadingSpinner from '../Components/LoadingSpinner';
 
 const BookMergerPage = () => {
   const navigate = useNavigate();
@@ -164,10 +165,7 @@ const BookMergerPage = () => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-shadow-bg flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-16 h-16 mx-auto border-4 border-shadow-accent border-t-transparent rounded-full animate-spin" />
-          <p className="text-shadow-text/60">جاري التحميل...</p>
-        </div>
+        <LoadingSpinner size="lg" text="جاري التحميل..." />
       </div>
     );
   }
