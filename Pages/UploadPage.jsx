@@ -12,6 +12,7 @@ import { useState, useRef, useCallback } from 'react';
 import { Upload, FileText, X, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
 import { useToast } from '../Components/ToastProvider';
 import TextAnalyzerEnhanced from '../Components/upload/TextAnalyzerEnhanced';
+import { supabase } from '../api/supabaseClient';
 
 const UploadPage = () => {
   const [files, setFiles] = useState([]);
@@ -129,17 +130,87 @@ const UploadPage = () => {
     ));
   };
 
+  // رفع إلى Supabase
+  const uploadToSupabase = async (fileObj, analysisResults) => {
+    try {
+      updateFileStatus(fileObj.id, 'analyzing', 80);
+
+      // 1. رفع الملف إلى Storage
+      const fileName = `${Date.now()}-${fileObj.file.name}`;
+      const { data: storageData, error: storageError } = await supabase.storage
+        .from('manuscripts')
+        .upload(fileName, fileObj.file, {
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (storageError) throw storageError;
+
+      updateFileStatus(fileObj.id, 'analyzing', 90);
+
+      // 2. الحصول على المستخدم الحالي
+      const { data: { user } } = await supabase.auth.getUser();
+
+      // 3. حفظ البيانات في Database
+      const { data: manuscript, error: dbError } = await supabase
+        .from('manuscripts')
+        .insert({
+          title: fileObj.name.replace(/\.(txt|docx|pdf)$/i, ''),
+          content: fileObj.content,
+          file_path: storageData.path,
+          word_count: analysisResults.wordCount || 0,
+          status: 'draft',
+          user_id: user?.id,
+          metadata: {
+            chapters: analysisResults.chapters || [],
+            content_type: analysisResults.contentType,
+            language: analysisResults.language,
+            analysis: analysisResults
+          }
+        })
+        .select()
+        .single();
+
+      if (dbError) throw dbError;
+
+      updateFileStatus(fileObj.id, 'completed', 100);
+      success('تم رفع المخطوطة بنجاح إلى قاعدة البيانات! 🎉');
+      
+      return manuscript;
+    } catch (err) {
+      console.error('Upload to Supabase error:', err);
+      error(`فشل الرفع: ${err.message}`);
+      throw err;
+    }
+  };
+
   // معالجة نتائج التحليل
-  const handleAnalysisComplete = (results) => {
+  const handleAnalysisComplete = async (results) => {
     if (currentFile) {
       setFiles(prev => prev.map(f =>
         f.id === currentFile.id 
-          ? { ...f, status: 'completed', progress: 100, analysis: results }
+          ? { ...f, status: 'analyzing', progress: 75, analysis: results }
           : f
       ));
       
       setAnalysisResults(results);
-      success('اكتمل التحليل بنجاح! ✨');
+      success('اكتمل التحليل! جاري الرفع إلى قاعدة البيانات...');
+
+      // رفع إلى Supabase
+      try {
+        await uploadToSupabase(currentFile, results);
+        setFiles(prev => prev.map(f =>
+          f.id === currentFile.id 
+            ? { ...f, status: 'completed', progress: 100 }
+            : f
+        ));
+      } catch (err) {
+        setFiles(prev => prev.map(f =>
+          f.id === currentFile.id 
+            ? { ...f, status: 'error', progress: 0 }
+            : f
+        ));
+      }
     }
     
     setAnalyzing(false);
