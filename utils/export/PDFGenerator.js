@@ -141,14 +141,16 @@ class PDFGenerator {
   /**
    * إضافة فهرس المحتويات
    */
-  _addTableOfContents(doc, chapters, config, contentWidth) {
+  addTableOfContents(doc, manuscript, config) {
+    const chapters = manuscript.chapters || [];
     let currentY = config.margin.top;
 
     // عنوان الفهرس
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
     const tocTitle = 'الفهرس';
-    const x = config.rtl ? doc.internal.pageSize.getWidth() - config.margin.right : config.margin.left;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const x = config.rtl ? pageWidth - config.margin.right : config.margin.left;
     doc.text(tocTitle, x, currentY, { align: config.rtl ? 'right' : 'left' });
     currentY += 15;
 

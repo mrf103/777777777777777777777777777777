@@ -3,7 +3,6 @@
  * Live Progress Indicator for Text Processing
  */
 
-import React from 'react';
 import { Progress } from '@/Components/ui/progress';
 import { Card } from '@/Components/ui/card';
 import { Loader2, CheckCircle2, AlertCircle, Clock } from 'lucide-react';

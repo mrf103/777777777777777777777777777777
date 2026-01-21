@@ -117,7 +117,7 @@ export function extractTableOfContents(text) {
     }
     
     // "الفصل الأول .................. 5"
-    const match = line.match(/^(.+?)\s*[\.…]+\s*(\d+)$/);
+    const match = line.match(/^(.+?)\s*[.…]+\s*(\d+)$/);
     
     if (match) {
       toc.push({

@@ -176,7 +176,7 @@ class QualityControlAgent extends SpecializedAgent {
     });
   }
   
-  async inspect(text, criteria = {}) {
+  async inspect(text) {
     const prompt = `أنت مراقب جودة محترف في دار نشر. افحص النص التالي:
 
 **معايير الفحص:**

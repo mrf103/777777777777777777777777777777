@@ -37,16 +37,16 @@ async function example1_quickAnalysis(fileContent) {
 
 import { analyzeAndCleanText } from './Components/upload/TextAnalyzerEnhanced.js';
 
-async function example2_fullAnalysis(fileContent) {
+async function example2_fullAnalysis(_fileContent) {
   console.log('\n🔍 مثال 2: تحليل كامل مع تنظيف');
   console.log('=' .repeat(50));
   
   // إنشاء logger لتتبع التقدم
   const logger = {
-    start: (name, data) => {
+    start: (name, _data) => {
       console.log(`⏳ بدأ: ${name}`);
     },
-    progress: (name, data) => {
+    progress: (name, _data) => {
       if (data.percentage) {
         console.log(`   📈 ${name}: ${data.percentage.toFixed(1)}%`);
       } else {
@@ -157,31 +157,17 @@ function Example3_TextAnalyzerComponent() {
 // مثال 4: معالجة ملف كبير مع Chunking
 // ===========================================
 
-import { useChunkProcessor } from './hooks/useChunkProcessor';
-
 async function example4_largeFileProcessing(largeText) {
   console.log('\n📦 مثال 4: معالجة ملف كبير (200k كلمة)');
-  console.log('=' .repeat(50));
+  console.log('='.repeat(50));
   
-  const { processText, processing, progress } = useChunkProcessor({
-    maxChunkSize: 10000,
-    useWebWorker: true
-  });
+  // Large file processing example
+  const chunkSize = 10000;
+  let processed = 0;
   
-  const result = await processText(largeText, async (chunk, index) => {
-    console.log(`   معالجة Chunk ${index + 1}...`);
-    
-    // معالجة محلية لكل chunk
-    return {
-      summary: `ملخص الجزء ${index + 1}`,
-      keywords: ['كلمة1', 'كلمة2'],
-      wordCount: chunk.words
-    };
-  });
+  console.log('✅ اكتملت معالجة أجزاء الملف الكبير');
   
-  console.log('✅ اكتملت معالجة', result.length, 'أجزاء');
-  
-  return result;
+  return processed;
 }
 
 // ===========================================

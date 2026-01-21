@@ -3,7 +3,6 @@ import {
   LayoutDashboard, 
   Upload, 
   FileText, 
-  Sparkles, 
   BookOpen,
   FileDown,
   Settings,

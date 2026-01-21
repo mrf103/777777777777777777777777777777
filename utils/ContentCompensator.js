@@ -167,8 +167,7 @@ ${chapters?.length > 0 ? `**الفصول الموجودة:**\n${chapters.map((ch
 export async function compensateDeletedContent(
   originalText, 
   cleanedText, 
-  chapters = [], 
-  options = {}
+  chapters = []
 ) {
   const originalWords = wordCount(originalText);
   const cleanedWords = wordCount(cleanedText);

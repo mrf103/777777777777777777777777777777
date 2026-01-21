@@ -42,7 +42,7 @@ const PATTERNS = {
 function calculateScore(text, patterns) {
   let score = 0;
   
-  Object.entries(patterns).forEach(([key, pattern]) => {
+  Object.values(patterns).forEach((pattern) => {
     const matches = (text.match(pattern) || []).length;
     score += matches;
   });

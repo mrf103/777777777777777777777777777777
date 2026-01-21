@@ -152,7 +152,7 @@ class EPUBGenerator {
   /**
    * توليد toc.ncx
    */
-  _generateTOC(manuscript, config) {
+  _generateTOC(manuscript) {
     const title = this._escapeXML(manuscript.title || 'Untitled');
     const chapters = manuscript.chapters || this._splitIntoChapters(manuscript.content);
     

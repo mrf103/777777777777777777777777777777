@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Card } from '@/Components/ui/card';
 
 const SocialSharing = ({ manuscript }) => {

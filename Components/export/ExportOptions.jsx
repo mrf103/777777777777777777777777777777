@@ -10,7 +10,7 @@
 import { useState } from 'react';
 import { FileDown, Package, FileText, BookOpen, FileImage } from 'lucide-react';
 
-const ExportOptions = ({ manuscript, onExport }) => {
+const ExportOptions = ({ onExport }) => {
   const [selectedFormats, setSelectedFormats] = useState({
     pdf: true,
     epub: false,

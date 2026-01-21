@@ -11,7 +11,7 @@
  * - اقتراحات تحسين النص
  */
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Save,
@@ -39,6 +39,32 @@ import {
 import { useToast } from '../Components/ToastProvider';
 import { useManuscript, useUpdateManuscript } from '../hooks/useManuscripts';
 import { useDebounce } from '../hooks/useDebounce';
+
+// مكونات مساعدة
+const LoadingSpinner = ({ size = 'md', text = 'جاري التحميل...' }) => (
+  <div className="flex flex-col items-center gap-2">
+    <Loader2 className={`animate-spin ${size === 'lg' ? 'w-8 h-8' : 'w-5 h-5'}`} />
+    <span className="text-sm text-gray-600">{text}</span>
+  </div>
+);
+
+const EmptyState = ({ icon: Icon, title, description, action, actionLabel }) => (
+  <div className="flex flex-col items-center gap-3 text-center">
+    <Icon className="w-12 h-12 text-gray-400" />
+    <div>
+      <h3 className="font-semibold text-lg text-gray-900">{title}</h3>
+      <p className="text-sm text-gray-600">{description}</p>
+    </div>
+    {action && (
+      <button
+        onClick={action}
+        className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+      >
+        {actionLabel}
+      </button>
+    )}
+  </div>
+);
 
 const EliteEditorPage = () => {
   const { id } = useParams();

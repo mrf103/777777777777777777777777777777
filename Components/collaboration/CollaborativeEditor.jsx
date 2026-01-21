@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useCollaboration } from '@/contexts/CollaborationContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card } from '@/Components/ui/card';
@@ -141,7 +141,7 @@ const CollaborativeEditor = ({ documentId, initialContent, onSave }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="flex -space-x-2">
-              {activeUsers.slice(0, 5).map((user, index) => (
+              {activeUsers.slice(0, 5).map((user) => (
                 <div
                   key={user.userId}
                   className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 border-2 border-white flex items-center justify-center text-white text-sm font-medium"

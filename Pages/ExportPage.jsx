@@ -10,7 +10,7 @@ import { ExportOptions, ExportProgress, PackagePreview, ExportResults } from '..
 import useExportManager from '../hooks/useExportManager';
 
 const ExportPage = () => {
-  const [selectedManuscript, setSelectedManuscript] = useState(null);
+  const [selectedManuscript] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
 
   const {

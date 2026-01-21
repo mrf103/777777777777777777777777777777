@@ -22,7 +22,8 @@ export class ProcessingLogger {
     this.logs.push(entry);
     
     // طباعة في وضع التطوير
-    if (process.env.NODE_ENV === 'development') {
+    const isDev = typeof process !== 'undefined' && process && process.env && process.env.NODE_ENV === 'development';
+    if (isDev) {
       console.log(`[${entry.timestamp}] [${stage}] ${status}`, details);
     }
     

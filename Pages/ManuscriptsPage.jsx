@@ -13,17 +13,14 @@ import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Search, 
-  Filter, 
   Plus, 
   FileText, 
   Clock, 
   CheckCircle, 
-  AlertCircle,
   Eye,
   Edit,
   Trash2,
   Download,
-  MoreVertical,
   BookOpen,
   Calendar,
   TrendingUp

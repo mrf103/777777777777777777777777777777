@@ -1,10 +1,8 @@
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Lightbulb,
   AlertTriangle,
   CheckCircle,
-  ArrowUp,
   Sparkles
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";

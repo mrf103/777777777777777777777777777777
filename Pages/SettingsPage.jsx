@@ -13,25 +13,21 @@ import { useState, useEffect } from 'react';
 import {
   User,
   Palette,
-  Globe,
   Lock,
   Bell,
   CreditCard,
-  Database,
-  Shield,
   Moon,
   Sun,
   Type,
   BookOpen,
   Download,
-  Trash2,
   Save,
   CheckCircle
 } from 'lucide-react';
 import { useToast } from '../Components/ToastProvider';
 
 const SettingsPage = () => {
-  const { success, error, info } = useToast();
+  const { success, error } = useToast();
   const STORAGE_KEY = 'manuscript-app:settings';
 
   const [settings, setSettings] = useState({

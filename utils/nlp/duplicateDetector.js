@@ -122,7 +122,7 @@ export function removeDuplicates(text, threshold = 0.8) {
     
     // تحقق من التشابه
     let isDuplicate = false;
-    for (const [existingHash, existingFingerprint] of seen.entries()) {
+    for (const existingFingerprint of seen.values()) {
       const similarity = calculateSimilarity(fingerprint, existingFingerprint);
       if (similarity > threshold) {
         isDuplicate = true;

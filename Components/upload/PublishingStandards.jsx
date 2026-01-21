@@ -1,6 +1,4 @@
-import { gemini } from "@/api/geminiClient";
 import { validateLanguageIntegrity } from "@/utils/LanguageValidator";
-import { validateWordCountDelta } from "@/utils/ContentCompensator";
 
 /**
  * معايير النشر الاحترافية - محدث 2026
@@ -98,7 +96,6 @@ export function validatePublishingStandards(manuscriptData) {
     
     // التحقق من توازن الفصول
     const chapterWordCounts = chapters.map(ch => ch.word_count || 0);
-    const avgWords = chapterWordCounts.reduce((a, b) => a + b, 0) / chapters.length;
     const maxWords = Math.max(...chapterWordCounts);
     const minWords = Math.min(...chapterWordCounts);
     
@@ -165,24 +162,7 @@ function calculateQualityScore(manuscriptData) {
 export async function generatePublishingReport(manuscriptData) {
   const validation = validatePublishingStandards(manuscriptData);
   
-  const reportPrompt = `أنت مستشار نشر محترف. اكتب تقريراً مختصراً (3-5 نقاط) عن جاهزية المخطوطة التالية للنشر:
-
-**بيانات المخطوطة**:
-- العنوان: ${manuscriptData.title || 'غير محدد'}
-- النوع: ${manuscriptData.genre || 'غير محدد'}
-- عدد الكلمات: ${manuscriptData.word_count?.toLocaleString()}
-- عدد الفصول: ${manuscriptData.chapters?.length || 0}
-- التناسق اللغوي: ${manuscriptData.quality_metrics?.language_consistency?.toFixed(0)}%
-- الوحدة الموضوعية: ${manuscriptData.quality_metrics?.thematic_unity?.toFixed(0)}%
-- نسبة التكرار: ${manuscriptData.quality_metrics?.repetition_rate?.toFixed(0)}%
-
-**المشاكل المكتشفة**: ${validation.issues.length > 0 ? validation.issues.join('; ') : 'لا توجد'}
-**التحذيرات**: ${validation.warnings.length > 0 ? validation.warnings.join('; ') : 'لا توجد'}
-
-قدم تقييماً مهنياً مع توصيات عملية للتحسين.`;
-
-  // Note: Professional assessment via AI is disabled in current version
-  // Use Gemini client if needed: import { gemini } from '@/api'
+  // Report generation would call an API or AI service
   
   return {
     ...validation,

@@ -12,7 +12,6 @@ import { detectLanguage, getTextStats } from "./nlp/arabicTokenizer";
  */
 const ARABIC_RANGE = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/;
 const ARABIC_LETTERS = /[\u0621-\u064A]/g;
-const ARABIC_DIACRITICS = /[\u064B-\u0652\u0670]/g;
 
 /**
  * أحرف Unicode المشوهة الشائعة (Mojibake)
@@ -22,7 +21,6 @@ const CORRUPTED_PATTERNS = [
   /ï»\u00BF|ï»½|ï»¾/g, // BOM and replacement characters
   /â€\u009C|â€\u009D|â€\u0093/g, // Smart quotes corrupted
   /\uFFFD/g, // Replacement character
-  /\x00/g, // Null bytes
 ];
 
 /**
@@ -60,7 +58,7 @@ function detectCorruption(text) {
     const code = char.charCodeAt(0);
     
     // تخطي المسافات والأرقام والعلامات الشائعة
-    if (/[\s\d\.,;:!?()\[\]{}\-]/.test(char)) continue;
+    if (/[\s\d.,;:!?()[\]{}\\-]/.test(char)) continue;
     
     // إذا كان الحرف عربياً
     if (ARABIC_RANGE.test(char)) {
@@ -107,7 +105,7 @@ function analyzeLanguageConsistency(text) {
   
   // حساب نسبة الأحرف العربية
   const arabicChars = (text.match(ARABIC_LETTERS) || []).length;
-  const totalChars = text.replace(/[\s\d\.,;:!?()\[\]{}\-]/g, '').length;
+  const totalChars = text.replace(/[\s\d.,;:!?()[\]{}\\-]/g, '').length;
   const arabicPercentage = totalChars > 0 ? (arabicChars / totalChars) * 100 : 0;
   
   // كشف خليط اللغات
@@ -254,9 +252,7 @@ function calculateLanguageScore(corruption, consistency, comparison) {
 export function attemptAutoFix(text) {
   let fixed = text;
   
-  // إزالة null bytes
-  fixed = fixed.replace(/\x00/g, '');
-  
+
   // إزالة replacement characters
   fixed = fixed.replace(/\uFFFD/g, '');
   

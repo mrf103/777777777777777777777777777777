@@ -10,16 +10,13 @@
  */
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
   Palette,
   Sparkles,
   Download,
   RefreshCw,
-  Image as ImageIcon,
   Type,
   Layers,
-  Zap,
   Grid,
   Save,
   Eye,
@@ -30,7 +27,6 @@ import {
 import { useToast } from '../Components/ToastProvider';
 
 const CoverDesignerPage = () => {
-  const navigate = useNavigate();
   const { success, error, info, warning } = useToast();
 
   const [coverData, setCoverData] = useState({
@@ -403,7 +399,7 @@ const CoverDesignerPage = () => {
                     لم يتم توليد أغلفة بعد
                   </p>
                   <p className="text-shadow-text/40 text-sm text-center">
-                    املأ المعلومات واضغط على "توليد بالذكاء الاصطناعي"
+                    املأ المعلومات واضغط على &quot;توليد بالذكاء الاصطناعي&quot;
                   </p>
                 </div>
               ) : (

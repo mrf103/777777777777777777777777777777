@@ -1,4 +1,3 @@
-import React from "react";
 import { AlertCircle, CheckCircle2, FileX } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 

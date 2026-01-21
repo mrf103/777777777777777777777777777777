@@ -10,7 +10,7 @@
  * - تصدير مباشر
  */
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Plus,
@@ -20,15 +20,12 @@ import {
   Shuffle,
   GitMerge,
   Eye,
-  Download,
   Sparkles,
   FileText,
-  AlertCircle,
   CheckCircle,
   GripVertical,
   Book,
   Layers,
-  Zap,
   Settings2
 } from 'lucide-react';
 import { useToast } from '../Components/ToastProvider';
@@ -359,7 +356,7 @@ const BookMergerPage = () => {
                   checked={mergeOptions.removeRedundancy}
                   onChange={(checked) => setMergeOptions({...mergeOptions, removeRedundancy: checked})}
                   label="إزالة التكرار"
-                  icon={<Zap className="w-3 h-3" />}
+                  icon={<Sparkles className="w-3 h-3" />}
                 />
                 <OptionCheckbox
                   checked={mergeOptions.aiEnhancement}

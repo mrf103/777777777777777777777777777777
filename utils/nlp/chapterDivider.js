@@ -3,7 +3,7 @@
  * تقسيم النص إلى 2-13 فصل بناءً على الوحدة الموضوعية
  */
 
-import { paragraphSplit, wordCount, sentenceSplit } from './arabicTokenizer.js';
+import { paragraphSplit, wordCount } from './arabicTokenizer.js';
 import { extractChapters } from './patternExtractor.js';
 
 export function smartDivideChapters(text, options = {}) {

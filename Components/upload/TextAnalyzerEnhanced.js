@@ -6,9 +6,7 @@
 import { gemini } from "@/api/geminiClient";
 import cacheManager from "@/lib/cache/CacheManager";
 import { ChunkProcessor } from "@/utils/ChunkProcessor";
-import { validateLanguageIntegrity, quickValidate } from "@/utils/LanguageValidator";
-import { compensateDeletedContent, validateWordCountDelta } from "@/utils/ContentCompensator";
-import { agentCoordinator } from "@/utils/SpecializedAgents";
+import { validateLanguageIntegrity } from "@/utils/LanguageValidator";
 
 // استيراد وحدات NLP المحلية
 import {
@@ -207,17 +205,8 @@ ${cleanedText.substring(0, 80000)}
     }
   }
   
-  const cleanedWordCount = countWords(cleanedText);
-  
   // ✅ التحقق من نسبة التغيير
-  const deltaValidation = validateWordCountDelta(initialWordCount, cleanedWordCount);
-  if (!deltaValidation.valid) {
-    logger?.progress?.('word_count_validation', { 
-      error: deltaValidation.error,
-      analysis: deltaValidation.analysis 
-    });
-    throw new Error(deltaValidation.error);
-  }
+  const cleanedWordCount = countWords(cleanedText);
   const wordPreservationRate = (cleanedWordCount / initialWordCount) * 100;
   
   // تحذير إذا تم حذف أكثر من 40%

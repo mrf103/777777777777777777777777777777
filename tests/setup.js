@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
 import { afterEach, vi } from 'vitest';
+import 'fake-indexeddb/auto';
 
 // Cleanup after each test
 afterEach(() => {
@@ -49,3 +50,15 @@ global.ResizeObserver = class ResizeObserver {
   observe() {}
   unobserve() {}
 };
+
+// Mock IndexedDB if not already available
+if (!global.indexedDB) {
+  const fakeIndexedDB = require('fake-indexeddb');
+  global.indexedDB = fakeIndexedDB;
+  global.IDBDatabase = fakeIndexedDB.IDBDatabase;
+  global.IDBFactory = fakeIndexedDB.IDBFactory;
+  global.IDBKeyRange = fakeIndexedDB.IDBKeyRange;
+  global.IDBObjectStore = fakeIndexedDB.IDBObjectStore;
+  global.IDBRequest = fakeIndexedDB.IDBRequest;
+  global.IDBTransaction = fakeIndexedDB.IDBTransaction;
+}

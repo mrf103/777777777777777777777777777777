@@ -8,8 +8,8 @@
  * - تكامل مع TextAnalyzerEnhanced
  */
 
-import { useState, useCallback, useRef } from 'react';
-import { Upload, FileText, X, CheckCircle, AlertCircle, Sparkles, FileCheck } from 'lucide-react';
+import { useState, useRef, useCallback } from 'react';
+import { Upload, FileText, X, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
 import { useToast } from '../Components/ToastProvider';
 import TextAnalyzerEnhanced from '../Components/upload/TextAnalyzerEnhanced';
 
@@ -20,7 +20,7 @@ const UploadPage = () => {
   const [currentFile, setCurrentFile] = useState(null);
   const [analysisResults, setAnalysisResults] = useState(null);
   const fileInputRef = useRef(null);
-  const { success, error, warning } = useToast();
+  const { success, error } = useToast();
 
   // التحقق من نوع الملف
   const validateFile = (file) => {

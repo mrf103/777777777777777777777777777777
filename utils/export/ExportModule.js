@@ -117,8 +117,6 @@ class ExportModule {
       results.errors.push({ format: 'DOCX', error: exports[2].reason.message });
     }
 
-    const successCount = [results.pdf, results.epub, results.docx].filter(Boolean).length;
-
     return results;
   }
 
