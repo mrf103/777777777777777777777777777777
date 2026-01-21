@@ -9,7 +9,7 @@
  * - إدارة الاشتراكات
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   User,
   Palette,
@@ -32,6 +32,7 @@ import { useToast } from '../Components/ToastProvider';
 
 const SettingsPage = () => {
   const { success, error, info } = useToast();
+  const STORAGE_KEY = 'manuscript-app:settings';
 
   const [settings, setSettings] = useState({
     // حساب
@@ -63,11 +64,23 @@ const SettingsPage = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [activeTab, setActiveTab] = useState('account');
 
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        setSettings((prev) => ({ ...prev, ...parsed }));
+      }
+    } catch (err) {
+      console.error('Failed to load settings', err);
+    }
+  }, []);
+
   // حفظ الإعدادات
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
       success('تم حفظ الإعدادات بنجاح!');
     } catch (err) {
       error('فشل حفظ الإعدادات');

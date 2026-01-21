@@ -31,7 +31,7 @@ import { useToast } from '../Components/ToastProvider';
 
 const CoverDesignerPage = () => {
   const navigate = useNavigate();
-  const { success, error, info } = useToast();
+  const { success, error, info, warning } = useToast();
 
   const [coverData, setCoverData] = useState({
     title: '',
@@ -48,6 +48,85 @@ const CoverDesignerPage = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [generatedCovers, setGeneratedCovers] = useState([]);
   const [currentCoverIndex, setCurrentCoverIndex] = useState(0);
+
+  const generateCoverImage = (data, variant = 0) => {
+    if (typeof document === 'undefined') return '';
+    const canvas = document.createElement('canvas');
+    canvas.width = 800;
+    canvas.height = 1200;
+    const ctx = canvas.getContext('2d');
+
+    const gradients = [
+      ctx.createLinearGradient(0, 0, canvas.width, canvas.height),
+      ctx.createLinearGradient(canvas.width, 0, 0, canvas.height),
+      ctx.createLinearGradient(0, canvas.height, canvas.width, 0)
+    ];
+    const gradient = gradients[variant % gradients.length];
+    gradient.addColorStop(0, data.primaryColor);
+    gradient.addColorStop(1, data.secondaryColor);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // طبقات زخرفية خفيفة
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = data.textColor;
+    for (let i = 0; i < 6; i++) {
+      ctx.beginPath();
+      const size = 80 + (i * 30);
+      ctx.arc(120 + i * 100, 150 + i * 120, size, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // عنوان الكتاب
+    ctx.fillStyle = data.textColor;
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 44px "Cairo", sans-serif';
+    const title = data.title || 'غلاف بدون عنوان';
+    wrapText(ctx, title, canvas.width / 2, canvas.height / 2 - 60, 520, 56);
+
+    // العنوان الفرعي
+    if (data.subtitle) {
+      ctx.font = '28px "Cairo", sans-serif';
+      wrapText(ctx, data.subtitle, canvas.width / 2, canvas.height / 2 + 40, 520, 40);
+    }
+
+    // اسم المؤلف
+    if (data.author) {
+      ctx.font = '24px "Cairo", sans-serif';
+      ctx.fillText(data.author, canvas.width / 2, canvas.height / 2 + 160);
+    }
+
+    // شارة النوع الأدبي
+    ctx.font = '20px "Cairo", sans-serif';
+    const badgeText = data.genre;
+    const badgeWidth = ctx.measureText(badgeText).width + 40;
+    const badgeX = (canvas.width - badgeWidth) / 2;
+    const badgeY = canvas.height - 140;
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.fillRect(badgeX, badgeY - 28, badgeWidth, 48);
+    ctx.fillStyle = data.textColor;
+    ctx.fillText(badgeText, canvas.width / 2, badgeY + 6);
+
+    return canvas.toDataURL('image/png');
+  };
+
+  const wrapText = (ctx, text, x, y, maxWidth, lineHeight) => {
+    const words = text.split(' ');
+    let line = '';
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' ';
+      const testWidth = ctx.measureText(testLine).width;
+      if (testWidth > maxWidth && n > 0) {
+        ctx.fillText(line.trim(), x, y);
+        line = words[n] + ' ';
+        y += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    ctx.fillText(line.trim(), x, y);
+  };
 
   // الأنماط المتاحة
   const styles = [
@@ -84,20 +163,17 @@ const CoverDesignerPage = () => {
 
     setIsGenerating(true);
     try {
-      // محاكاة توليد AI
-      await new Promise(resolve => setTimeout(resolve, 3000));
-
-      // توليد 4 تصاميم
-      const newCovers = Array(4).fill(null).map((_, i) => ({
-        id: Date.now() + i,
-        url: `https://via.placeholder.com/400x600/1e3a5f/ffffff?text=${encodeURIComponent(coverData.title)}`,
+      const variants = [0, 1, 2, 3];
+      const newCovers = variants.map((variant) => ({
+        id: `${Date.now()}-${variant}`,
+        url: generateCoverImage(coverData, variant),
         style: coverData.style,
         prompt: `غلاف ${coverData.genre} بأسلوب ${coverData.style}`
       }));
 
       setGeneratedCovers(newCovers);
       setCurrentCoverIndex(0);
-      success('تم توليد 4 تصاميم جديدة! ✨');
+      success('تم توليد تصاميم جاهزة للتحميل');
       
     } catch (err) {
       console.error('Generation error:', err);
@@ -113,9 +189,16 @@ const CoverDesignerPage = () => {
       warning('قم بتوليد غلاف أولاً');
       return;
     }
-    
-    success('تم حفظ الغلاف بنجاح!');
-    info('يمكنك تحميله الآن');
+
+    try {
+      const current = generatedCovers[currentCoverIndex] || generatedCovers[0];
+      localStorage.setItem('lastCover', current.url);
+      success('تم حفظ الغلاف محلياً');
+      info('يمكنك تحميله الآن');
+    } catch (err) {
+      console.error('Save error:', err);
+      error('تعذر حفظ الغلاف محلياً');
+    }
   };
 
   // تحميل الغلاف
@@ -125,18 +208,28 @@ const CoverDesignerPage = () => {
       return;
     }
 
-    success('جاري التحميل...');
-    // TODO: Implement actual download
+    const current = generatedCovers[currentCoverIndex] || generatedCovers[0];
+    const link = document.createElement('a');
+    link.href = current.url;
+    link.download = `${coverData.title || 'cover'}.png`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    success('تم تحميل الغلاف');
   };
 
   // التنقل بين الأغلفة
   const nextCover = () => {
+    if (generatedCovers.length === 0) return;
     setCurrentCoverIndex((prev) => (prev + 1) % generatedCovers.length);
   };
 
   const prevCover = () => {
+    if (generatedCovers.length === 0) return;
     setCurrentCoverIndex((prev) => (prev - 1 + generatedCovers.length) % generatedCovers.length);
   };
+
+  const currentCover = generatedCovers[currentCoverIndex] || null;
 
   return (
     <div className="min-h-screen bg-shadow-bg p-6">
@@ -304,7 +397,6 @@ const CoverDesignerPage = () => {
               </div>
 
               {generatedCovers.length === 0 ? (
-                // حالة فارغة
                 <div className="aspect-[2/3] bg-gradient-to-br from-shadow-bg to-shadow-primary/10 rounded-lg flex flex-col items-center justify-center border-2 border-dashed border-shadow-primary/30">
                   <Wand2 className="w-24 h-24 text-shadow-text/20 mb-4" />
                   <p className="text-shadow-text/60 text-center mb-2">
@@ -315,46 +407,17 @@ const CoverDesignerPage = () => {
                   </p>
                 </div>
               ) : (
-                // معاينة الغلاف
                 <div className="relative">
-                  <div className="aspect-[2/3] bg-gradient-to-br from-shadow-primary to-shadow-bg rounded-lg overflow-hidden shadow-2xl">
-                    {/* Placeholder للغلاف */}
-                    <div 
-                      className="w-full h-full flex flex-col items-center justify-center text-center p-8"
-                      style={{
-                        background: `linear-gradient(135deg, ${coverData.primaryColor} 0%, ${coverData.secondaryColor} 100%)`
-                      }}
-                    >
-                      <div className="space-y-6">
-                        {coverData.author && (
-                          <p className="text-sm opacity-80" style={{ color: coverData.textColor }}>
-                            {coverData.author}
-                          </p>
-                        )}
-                        <h1 
-                          className="text-4xl font-bold leading-tight"
-                          style={{ color: coverData.textColor }}
-                        >
-                          {coverData.title}
-                        </h1>
-                        {coverData.subtitle && (
-                          <p className="text-lg opacity-80" style={{ color: coverData.textColor }}>
-                            {coverData.subtitle}
-                          </p>
-                        )}
-                        <div className="pt-8">
-                          <span 
-                            className="text-xs px-3 py-1 rounded-full bg-white/20"
-                            style={{ color: coverData.textColor }}
-                          >
-                            {coverData.genre}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="aspect-[2/3] bg-shadow-bg rounded-lg overflow-hidden shadow-2xl">
+                    {currentCover && (
+                      <img
+                        src={currentCover.url}
+                        alt="معاينة الغلاف"
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
 
-                  {/* أزرار التنقل */}
                   {generatedCovers.length > 1 && (
                     <>
                       <button

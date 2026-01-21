@@ -54,6 +54,68 @@ const BookMergerPage = () => {
     aiEnhancement: false
   });
 
+  const mergeInterleaved = (books) => {
+    const paragraphs = books.map((book) => (book.content || '').split(/\n\s*\n/));
+    const maxLength = Math.max(...paragraphs.map((p) => p.length));
+    const merged = [];
+
+    for (let i = 0; i < maxLength; i++) {
+      books.forEach((book, idx) => {
+        if (paragraphs[idx][i]) {
+          merged.push(`## ${book.title} - جزء ${i + 1}\n${paragraphs[idx][i].trim()}`);
+        }
+      });
+    }
+
+    return merged.join('\n\n');
+  };
+
+  const buildMergedContent = () => {
+    const cleaned = selectedBooks.map((book) => ({
+      ...book,
+      content: (book.content || '').trim()
+    }));
+
+    let mergedText = '';
+    let pageCursor = 1;
+
+    const withPageNote = (book, body) => {
+      if (!mergeOptions.addPageNumbers) return body;
+      const words = book.wordCount || ((book.content || '').split(/\s+/).filter(Boolean).length);
+      const estimatedPages = Math.max(1, Math.ceil(words / 250));
+      const note = `\n\n[ص ~${pageCursor}-${pageCursor + estimatedPages - 1}]`;
+      pageCursor += estimatedPages;
+      return `${body}${note}`;
+    };
+
+    if (mergeMode === 'interleaved') {
+      mergedText = mergeInterleaved(cleaned);
+    } else {
+      mergedText = cleaned
+        .map((book, idx) => {
+          const body = `# ${book.title || `قسم ${idx + 1}`}\n\n${book.content}`;
+          return withPageNote(book, body);
+        })
+        .join('\n\n');
+    }
+
+    if (mergeOptions.unifyFormatting) {
+      mergedText = mergedText.replace(/[\t ]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+    }
+
+    const toc = mergeOptions.addToc
+      ? cleaned.map((book, idx) => `${idx + 1}. ${book.title}`)
+      : [];
+
+    const wordCount = mergedText
+      ? mergedText.split(/\s+/).filter(Boolean).length
+      : 0;
+
+    const estimatedPages = Math.max(1, Math.ceil(wordCount / 250));
+
+    return { mergedText, toc, wordCount, estimatedPages };
+  };
+
   // إضافة كتاب للدمج
   const handleAddBook = (manuscript) => {
     if (selectedBooks.find(b => b.id === manuscript.id)) {
@@ -113,27 +175,29 @@ const BookMergerPage = () => {
       return;
     }
 
+    if (selectedBooks.some((book) => !book.content)) {
+      error('بعض المخطوطات لا تحتوي على محتوى قابل للدمج');
+      return;
+    }
+
     setIsMerging(true);
     try {
-      // محاكاة الدمج
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const { mergedText, toc, wordCount, estimatedPages } = buildMergedContent();
 
-      // TODO: API call to merge books
       const mergedContent = {
         title: mergedTitle,
         books: selectedBooks,
         mode: mergeMode,
         options: mergeOptions,
-        totalWordCount: selectedBooks.reduce((sum, b) => sum + b.wordCount, 0)
+        toc,
+        content: mergedText,
+        totalWordCount: wordCount,
+        estimatedPages
       };
 
       success('تم الدمج بنجاح! 🎉');
       info('جاهز للتصدير');
-      
-      // الانتقال لصفحة التصدير
-      setTimeout(() => {
-        navigate('/export', { state: { mergedBook: mergedContent } });
-      }, 1500);
+      navigate('/export', { state: { mergedBook: mergedContent } });
 
     } catch (err) {
       console.error('Merge error:', err);

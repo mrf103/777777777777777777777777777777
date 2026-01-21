@@ -124,6 +124,35 @@ const EliteEditorPage = () => {
     return selection?.toString() || '';
   };
 
+  const improveText = (text) => {
+    const cleaned = text.replace(/\s+/g, ' ').trim();
+    if (!cleaned) return '';
+    const capitalized = cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+    return `${capitalized}${/[.!؟…]$/.test(capitalized) ? '' : '.'}`;
+  };
+
+  const expandText = (text) => {
+    const base = text.trim();
+    if (!base) return '';
+    return `${base}\n\nتفصيل إضافي: ${base.split(' ').slice(0, 8).join(' ')}...`;
+  };
+
+  const summarizeText = (text) => {
+    const sentences = text
+      .replace(/\n+/g, ' ')
+      .split(/[.!؟…]/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (sentences.length === 0) return '';
+    const summary = sentences.slice(0, 2).join('، ');
+    return `ملخص: ${summary}${summary.endsWith('...') ? '' : '...'}`;
+  };
+
+  const continueWriting = (text) => {
+    const tail = text.split(/\s+/).slice(-12).join(' ');
+    return `${text ? '\n\n' : ''}${tail} ...`;
+  };
+
   // AI Writing Assistant
   const handleAISuggestion = async (type) => {
     const selected = getSelectedText();
@@ -134,26 +163,26 @@ const EliteEditorPage = () => {
 
     setAiLoading(true);
     try {
-      // TODO: Integrate with AI API
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
       let suggestion = '';
+      const plainContent = content.replace(/<[^>]*>/g, ' ');
+      const sourceText = selected || plainContent;
+
       switch (type) {
         case 'improve':
-          suggestion = `[محسّن] ${selected}`;
-          info('تم تحسين النص بالذكاء الاصطناعي');
+          suggestion = improveText(sourceText);
+          info('تم تحسين النص');
           break;
         case 'expand':
-          suggestion = `${selected}\n\n[توسيع إضافي بالذكاء الاصطناعي]`;
+          suggestion = expandText(sourceText);
           info('تم توسيع النص');
           break;
         case 'summarize':
-          suggestion = `[ملخص] ${selected.substring(0, 50)}...`;
+          suggestion = summarizeText(sourceText);
           info('تم تلخيص النص');
           break;
         case 'continue':
-          suggestion = '\n\n[استكمال النص بالذكاء الاصطناعي...]';
-          info('جاري استكمال الكتابة...');
+          suggestion = continueWriting(sourceText || title);
+          info('تمت متابعة الكتابة');
           break;
         default:
           break;

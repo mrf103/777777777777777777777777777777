@@ -59,6 +59,36 @@ export const api = {
 
 // API Client للـ Dashboard
 export const apiClient = {
+  // Manuscripts CRUD
+  async getManuscripts(params = {}) {
+    const { orderBy = '-created_at', limit, filters } = params
+    if (filters && Object.keys(filters).length > 0) {
+      return await db.manuscripts.filter(filters)
+    }
+    return await db.manuscripts.list(orderBy, limit)
+  },
+
+  async getManuscript(id) {
+    return await db.manuscripts.get(id)
+  },
+
+  async createManuscript(data) {
+    return await db.manuscripts.create(data)
+  },
+
+  async updateManuscript(id, data) {
+    return await db.manuscripts.update(id, data)
+  },
+
+  async deleteManuscript(id) {
+    return await db.manuscripts.delete(id)
+  },
+
+  async uploadFile(file, onProgress) {
+    // onProgress غير مدعوم مباشرة هنا؛ FileService لا يدعم progress events حالياً
+    return await FileService.uploadFile(file)
+  },
+
   getDashboardStats: async () => {
     try {
       const manuscripts = await db.manuscripts.list()

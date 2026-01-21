@@ -33,59 +33,92 @@ const AnalyticsDashboardPage = () => {
   const loadAnalytics = async () => {
     setLoading(true);
     try {
-      // في بيئة production، هذه البيانات ستأتي من Supabase
-      // هنا نستخدم بيانات تجريبية للعرض
-      
-      const mockData = {
-        overview: {
-          totalManuscripts: 24,
-          totalWords: 245890,
-          totalReads: 12450,
-          avgRating: 4.5,
-          growthRate: 23.5
-        },
-        manuscriptStats: [
-          { name: 'رواية الحب الأول', words: 52000, reads: 3200, rating: 4.7, status: 'منشورة' },
-          { name: 'قصة المغامرة', words: 18500, reads: 1800, rating: 4.5, status: 'منشورة' },
-          { name: 'ديوان الشعر', words: 8200, reads: 950, rating: 4.3, status: 'منشورة' },
-          { name: 'رواية الغموض', words: 45000, reads: 2100, rating: 4.6, status: 'قيد المراجعة' },
-          { name: 'مقالات فلسفية', words: 12500, reads: 680, rating: 4.1, status: 'مسودة' }
-        ],
-        genreDistribution: [
-          { name: 'رواية', value: 10, color: '#3b82f6' },
-          { name: 'قصة قصيرة', value: 6, color: '#10b981' },
-          { name: 'شعر', value: 4, color: '#f59e0b' },
-          { name: 'مقال', value: 3, color: '#ef4444' },
-          { name: 'دراسة', value: 1, color: '#8b5cf6' }
-        ],
-        readingTrends: [
-          { date: '1 يناير', reads: 450, likes: 120, shares: 30 },
-          { date: '5 يناير', reads: 680, likes: 180, shares: 45 },
-          { date: '10 يناير', reads: 920, likes: 250, shares: 60 },
-          { date: '15 يناير', reads: 1200, likes: 340, shares: 85 },
-          { date: '20 يناير', reads: 1450, likes: 420, shares: 105 }
-        ],
-        userEngagement: [
-          { metric: 'القراءة', value: 85 },
-          { metric: 'الإعجاب', value: 65 },
-          { metric: 'المشاركة', value: 45 },
-          { metric: 'التعليق', value: 35 },
-          { metric: 'الحفظ', value: 55 },
-          { metric: 'المتابعة', value: 70 }
-        ],
-        performanceMetrics: [
-          { month: 'يناير', manuscripts: 24, reads: 12450, engagement: 68 },
-          { month: 'ديسمبر', manuscripts: 22, reads: 10800, engagement: 62 },
-          { month: 'نوفمبر', manuscripts: 20, reads: 9200, engagement: 58 },
-          { month: 'أكتوبر', manuscripts: 18, reads: 7600, engagement: 54 },
-          { month: 'سبتمبر', manuscripts: 16, reads: 6300, engagement: 50 },
-          { month: 'أغسطس', manuscripts: 14, reads: 5100, engagement: 46 }
-        ]
-      };
+      const { data, error } = await supabase
+        .from('manuscripts')
+        .select('id,title,word_count,genre,status,created_at');
 
-      setAnalytics(mockData);
+      if (error) throw error;
+
+      const manuscripts = data || [];
+
+      // Overview
+      const totalManuscripts = manuscripts.length;
+      const totalWords = manuscripts.reduce((sum, m) => sum + (m.word_count || 0), 0);
+
+      // Genre distribution
+      const genreColors = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#6366f1', '#14b8a6'];
+      const genreMap = manuscripts.reduce((acc, m) => {
+        const key = m.genre || 'غير محدد';
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {});
+      const genreDistribution = Object.entries(genreMap).map(([name, value], idx) => ({
+        name,
+        value,
+        color: genreColors[idx % genreColors.length]
+      }));
+
+      // Manuscript stats (top 10 by words)
+      const manuscriptStats = [...manuscripts]
+        .sort((a, b) => (b.word_count || 0) - (a.word_count || 0))
+        .slice(0, 10)
+        .map((m) => ({
+          name: m.title || 'بدون عنوان',
+          words: m.word_count || 0,
+          reads: 0, // لا يوجد حقل قراءات حالياً
+          rating: 0, // لا يوجد تقييم حالياً
+          status: m.status || 'draft'
+        }));
+
+      // Reading trends by day (based على created_at إن وجد)
+      const trendsMap = manuscripts.reduce((acc, m) => {
+        if (!m.created_at) return acc;
+        const date = new Date(m.created_at);
+        if (isNaN(date)) return acc;
+        const key = date.toLocaleDateString('ar-EG');
+        if (!acc[key]) acc[key] = { date: key, reads: 0, likes: 0, shares: 0 };
+        acc[key].reads += 1;
+        return acc;
+      }, {});
+      const readingTrends = Object.values(trendsMap).sort((a, b) => new Date(a.date) - new Date(b.date));
+
+      // Performance metrics by month
+      const perfMap = manuscripts.reduce((acc, m) => {
+        if (!m.created_at) return acc;
+        const date = new Date(m.created_at);
+        if (isNaN(date)) return acc;
+        const key = `${date.getFullYear()}-${date.getMonth() + 1}`;
+        if (!acc[key]) acc[key] = { month: key, manuscripts: 0, reads: 0, engagement: 0 };
+        acc[key].manuscripts += 1;
+        return acc;
+      }, {});
+      const performanceMetrics = Object.values(perfMap).sort((a, b) => a.month.localeCompare(b.month));
+
+      setAnalytics({
+        overview: {
+          totalManuscripts,
+          totalWords,
+          totalReads: 0, // لا يوجد حقل قراءات حالياً
+          avgRating: 0,
+          growthRate: 0
+        },
+        manuscriptStats,
+        genreDistribution,
+        readingTrends,
+        userEngagement: [],
+        performanceMetrics
+      });
     } catch (error) {
       console.error('Error loading analytics:', error);
+      setAnalytics((prev) => ({
+        ...prev,
+        overview: { ...prev.overview, totalManuscripts: 0, totalWords: 0 },
+        manuscriptStats: [],
+        genreDistribution: [],
+        readingTrends: [],
+        performanceMetrics: [],
+        userEngagement: []
+      }));
     } finally {
       setLoading(false);
     }
@@ -156,26 +189,26 @@ const AnalyticsDashboardPage = () => {
           title="إجمالي المخطوطات"
           value={analytics.overview.totalManuscripts}
           icon="📚"
-          trend={15}
+          trend={0}
         />
         <StatCard
           title="إجمالي الكلمات"
           value={analytics.overview.totalWords.toLocaleString()}
           icon="📝"
-          trend={23.5}
+          trend={0}
         />
         <StatCard
           title="إجمالي القراءات"
           value={analytics.overview.totalReads.toLocaleString()}
           icon="👁️"
-          trend={18}
+          trend={0}
         />
         <StatCard
           title="متوسط التقييم"
           value={analytics.overview.avgRating.toFixed(1)}
           subtitle="من 5.0"
           icon="⭐"
-          trend={5}
+          trend={0}
         />
       </div>
 

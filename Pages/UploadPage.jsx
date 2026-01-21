@@ -24,18 +24,12 @@ const UploadPage = () => {
 
   // التحقق من نوع الملف
   const validateFile = (file) => {
-    const validTypes = [
-      'text/plain',
-      'application/pdf',
-      'application/msword',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    ];
-    
-    const validExtensions = ['.txt', '.pdf', '.doc', '.docx'];
+    const validTypes = ['text/plain'];
+    const validExtensions = ['.txt'];
     const fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
-    
+
     if (!validTypes.includes(file.type) && !validExtensions.includes(fileExtension)) {
-      error('نوع الملف غير مدعوم. الرجاء رفع ملفات: TXT, PDF, DOC, DOCX');
+      error('الآن ندعم ملفات TXT فقط. حوّل الملف إلى TXT ثم أعد الرفع.');
       return false;
     }
 
@@ -62,12 +56,8 @@ const UploadPage = () => {
         reject(new Error('فشل قراءة الملف'));
       };
 
-      // قراءة النص فقط للآن (PDF يحتاج معالجة خاصة)
-      if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
-        reader.readAsText(file, 'UTF-8');
-      } else {
-        reject(new Error('نوع الملف يحتاج معالجة خاصة (PDF/DOC)'));
-      }
+      // قراءة النص (TXT فقط)
+      reader.readAsText(file, 'UTF-8');
     });
   };
 
@@ -247,7 +237,7 @@ const UploadPage = () => {
             ref={fileInputRef}
             type="file"
             multiple
-            accept=".txt,.pdf,.doc,.docx"
+            accept=".txt,text/plain"
             onChange={handleFileInputChange}
             className="hidden"
           />
@@ -278,12 +268,6 @@ const UploadPage = () => {
             <div className="flex justify-center gap-2 flex-wrap text-sm text-shadow-text/40">
               <span>الصيغ المدعومة:</span>
               <span className="text-shadow-accent">TXT</span>
-              <span>•</span>
-              <span className="text-shadow-accent">PDF</span>
-              <span>•</span>
-              <span className="text-shadow-accent">DOC</span>
-              <span>•</span>
-              <span className="text-shadow-accent">DOCX</span>
             </div>
 
             <div className="text-sm text-shadow-text/40">
