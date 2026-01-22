@@ -8,6 +8,8 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 export default defineConfig(({ mode }) => ({
+  // Explicit root ensures builds run from any working directory (e.g., container build steps)
+  root: __dirname,
   plugins: [react()],
   resolve: {
     alias: {
@@ -48,6 +50,8 @@ export default defineConfig(({ mode }) => ({
       }
     },
     rollupOptions: {
+      // Pin the HTML entry to avoid "index.html" resolution issues in stripped build contexts
+      input: path.resolve(__dirname, 'index.html'),
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
