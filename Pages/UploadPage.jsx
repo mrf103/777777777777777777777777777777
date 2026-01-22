@@ -11,7 +11,7 @@
 import { useState, useRef, useCallback } from 'react';
 import { Upload, FileText, X, CheckCircle, AlertCircle, Sparkles } from 'lucide-react';
 import { useToast } from '../Components/ToastProvider';
-import TextAnalyzerEnhanced from '../Components/upload/TextAnalyzerEnhanced';
+import { analyzeAndCleanText } from '@/Components/upload/TextAnalyzerEnhanced';
 import { supabase } from '../api/supabaseClient';
 
 const UploadPage = () => {
@@ -110,9 +110,22 @@ const UploadPage = () => {
       ));
 
       success('تم قراءة الملف بنجاح. جاري التحليل...');
-
-      // التحليل سيتم عبر TextAnalyzerEnhanced component
       updateFileStatus(fileObj.id, 'analyzing', 50);
+
+      // بدء التحليل مباشرة باستخدام الدالة بدلاً من مكون غير موجود
+      const logger = {
+        start: () => {},
+        progress: (info) => {
+          // تقدير تقدّم بسيط بين 50% و 90%
+          const next = Math.min(90, 50 + Math.floor((info?.completed || 0) / (info?.total || 1) * 40));
+          updateFileStatus(fileObj.id, 'analyzing', next);
+        },
+        complete: () => {},
+        warn: () => {}
+      };
+
+      const analysis = await analyzeAndCleanText(content, 'ar', logger);
+      await handleAnalysisComplete(analysis);
 
     } catch (err) {
       console.error('Error processing file:', err);
@@ -355,16 +368,7 @@ const UploadPage = () => {
           </div>
         )}
 
-        {/* محلل النصوص */}
-        {currentFile && currentFile.content && (
-          <div className="mt-8">
-            <TextAnalyzerEnhanced
-              text={currentFile.content}
-              onComplete={handleAnalysisComplete}
-              autoStart={true}
-            />
-          </div>
-        )}
+        {/* التحليل يتم الآن مباشرة عبر الدالة analyzeAndCleanText */}
 
         {/* نتائج التحليل */}
         {analysisResults && (

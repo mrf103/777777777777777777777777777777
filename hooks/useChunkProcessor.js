@@ -16,7 +16,7 @@ export function useChunkProcessor(options = {}) {
   
   const processorRef = useRef(new ChunkProcessor(maxChunkSize));
   const { postMessage: workerPostMessage, isReady: workerReady } = useWorker(
-    '/workers/nlpProcessor.worker.js'
+    new URL('../workers/nlpProcessor.worker.js', import.meta.url)
   );
   
   const processText = useCallback(async (text, processor) => {
