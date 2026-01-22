@@ -11,7 +11,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "preview:host": "serve -s dist -l tcp://0.0.0.0:${PORT:-5005}",
-    "start": "serve dist -l $PORT",
+    "start": "serve -s dist -l tcp://0.0.0.0:$PORT",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext js,jsx --fix",
     "format": "prettier --write \"**/*.{js,jsx,json,css,md}\"",
