@@ -38,4 +38,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD node -e "require('http').get('http://localhost:' + (process.env.PORT || 5005), (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
 # Start application with serve
-CMD ["sh", "-c", "serve -s dist -l tcp://0.0.0.0:${PORT:-5005}"]
+CMD ["sh", "-c", "serve -s dist -l ${PORT:-5005}"]
