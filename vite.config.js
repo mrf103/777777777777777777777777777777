@@ -50,8 +50,6 @@ export default defineConfig(({ mode }) => ({
       }
     },
     rollupOptions: {
-      // Pin the HTML entry to avoid "index.html" resolution issues in stripped build contexts
-      input: path.resolve(__dirname, 'index.html'),
       output: {
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
