@@ -4,23 +4,23 @@
  */
 
 :root {
-  /* Cyber Colors */
-  --shadow-bg: #0a0a0f;
-  --shadow-surface: #1a1a2e;
-  --shadow-card: #16213e;
-  --shadow-primary: #00ff88;
-  --shadow-secondary: #ff0080;
-  --shadow-accent: #00d4ff;
-  --shadow-text: #e0e0e0;
-  --shadow-muted: #666677;
-  --shadow-border: #2a2a3e;
-  --shadow-hover: #252540;
+  /* Vintage Arabic palette */
+  --shadow-bg: #f7f1e3;
+  --shadow-surface: #f0e6d8;
+  --shadow-card: #e6dbc8;
+  --shadow-primary: #7a4b2a;
+  --shadow-secondary: #b88b4a;
+  --shadow-accent: #2f6b5f;
+  --shadow-text: #2f2416;
+  --shadow-muted: #6f6254;
+  --shadow-border: #d8c7b2;
+  --shadow-hover: #efe3d3;
   
-  /* Glow Effects */
-  --glow-green: rgba(0, 255, 136, 0.3);
-  --glow-pink: rgba(255, 0, 128, 0.3);
-  --glow-blue: rgba(0, 212, 255, 0.3);
-  --glow-purple: rgba(138, 43, 226, 0.3);
+  /* Soft glow accents */
+  --glow-green: rgba(122, 75, 42, 0.18);
+  --glow-pink: rgba(184, 139, 74, 0.18);
+  --glow-blue: rgba(47, 107, 95, 0.14);
+  --glow-purple: rgba(120, 90, 60, 0.14);
 }
 
 /* Cyber Theme Body */
@@ -34,59 +34,56 @@
 .neon-text {
   color: var(--shadow-primary);
   text-shadow: 
-    0 0 10px var(--glow-green),
-    0 0 20px var(--glow-green),
-    0 0 30px var(--glow-green);
-  animation: glow 2s ease-in-out infinite alternate;
+    0 2px 4px var(--glow-green),
+    0 4px 8px var(--glow-green);
+  font-weight: 600;
+  font-family: 'Playfair Display', serif;
 }
 
 .neon-text-pink {
   color: var(--shadow-secondary);
   text-shadow: 
-    0 0 10px var(--glow-pink),
-    0 0 20px var(--glow-pink),
-    0 0 30px var(--glow-pink);
+    0 2px 4px var(--glow-pink),
+    0 4px 8px var(--glow-pink);
+  font-weight: 600;
 }
 
 .neon-text-blue {
   color: var(--shadow-accent);
   text-shadow: 
-    0 0 10px var(--glow-blue),
-    0 0 20px var(--glow-blue),
-    0 0 30px var(--glow-blue);
+    0 2px 4px var(--glow-blue),
+    0 4px 8px var(--glow-blue);
+  font-weight: 600;
 }
-
 /* Neon Border Effect */
 .neon-border {
   border: 2px solid var(--shadow-primary);
   box-shadow: 
-    0 0 10px var(--glow-green),
-    inset 0 0 10px var(--glow-green);
+    0 2px 8px var(--glow-green);
 }
 
 .neon-border-pink {
   border: 2px solid var(--shadow-secondary);
   box-shadow: 
-    0 0 10px var(--glow-pink),
-    inset 0 0 10px var(--glow-pink);
+    0 2px 8px var(--glow-pink);
 }
 
 .neon-border-blue {
   border: 2px solid var(--shadow-accent);
   box-shadow: 
-    0 0 10px var(--glow-blue),
-    inset 0 0 10px var(--glow-blue);
+    0 2px 8px var(--glow-blue);
 }
 
-/* Cyber Card */
+/* Vintage Card */
 .cyber-card {
   background: var(--shadow-card);
   border: 1px solid var(--shadow-border);
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(47, 37, 22, 0.08);
 }
 
 .cyber-card::before {
@@ -95,20 +92,20 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 2px;
+  height: 3px;
   background: linear-gradient(
     90deg,
     transparent,
-    var(--shadow-primary),
+    rgba(47, 107, 95, 0.25),
     transparent
   );
-  animation: scan-line 3s linear infinite;
+  opacity: 0.7;
 }
 
 .cyber-card:hover {
-  border-color: var(--shadow-primary);
-  box-shadow: 0 0 20px var(--glow-green);
-  transform: translateY(-2px);
+  border-color: rgba(122, 75, 42, 0.4);
+  box-shadow: 0 16px 40px rgba(47, 37, 22, 0.14);
+  transform: translateY(-4px);
 }
 
 /* Scan Line Animation */
@@ -223,10 +220,10 @@
   color: var(--shadow-primary);
   border: 2px solid var(--shadow-primary);
   padding: 0.75rem 2rem;
-  font-family: 'Orbitron', monospace;
+  font-family: 'Noto Naskh Arabic', serif;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
+  text-transform: none;
+  letter-spacing: 0.5px;
   cursor: pointer;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -242,7 +239,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    var(--glow-green),
+    rgba(122, 75, 42, 0.15),
     transparent
   );
   transition: left 0.5s ease;
@@ -253,11 +250,10 @@
 }
 
 .cyber-button:hover {
-  color: var(--shadow-bg);
+  color: #fff;
   background: var(--shadow-primary);
   box-shadow: 
-    0 0 20px var(--glow-green),
-    inset 0 0 20px var(--glow-green);
+    0 4px 12px rgba(122, 75, 42, 0.25);
 }
 
 /* Matrix Rain Effect (Background) */
@@ -355,18 +351,18 @@
   height: 10px;
   background: var(--shadow-primary);
   border-radius: 50%;
-  box-shadow: 0 0 10px var(--glow-green);
+  box-shadow: 0 0 6px rgba(122, 75, 42, 0.3);
   animation: pulse-neon 1.5s ease-in-out infinite;
 }
 
 @keyframes pulse-neon {
   0%, 100% {
     opacity: 1;
-    box-shadow: 0 0 5px var(--glow-green);
+    box-shadow: 0 0 4px rgba(122, 75, 42, 0.2);
   }
   50% {
-    opacity: 0.5;
-    box-shadow: 0 0 20px var(--glow-green);
+    opacity: 0.6;
+    box-shadow: 0 0 10px rgba(122, 75, 42, 0.3);
   }
 }
 

@@ -9,44 +9,44 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Classic Theme (Legacy)
+        // Vintage Arabic palette
         primary: {
-          DEFAULT: '#1e3a5f',
-          50: '#f0f4f8',
-          500: '#1e3a5f',
-          600: '#1a324f',
+          DEFAULT: '#7a4b2a',
+          50: '#f7f1e3',
+          500: '#7a4b2a',
+          600: '#5f331a',
         },
         secondary: {
-          DEFAULT: '#2563eb',
-          500: '#2563eb',
+          DEFAULT: '#b88b4a',
+          500: '#b88b4a',
         },
         accent: {
-          DEFAULT: '#c9a227',
-          500: '#c9a227',
+          DEFAULT: '#2f6b5f',
+          500: '#2f6b5f',
         },
-        // Shadow Seven - Cyber Theme
         shadow: {
-          bg: '#0a0a0f',           // Dark background
-          surface: '#1a1a2e',      // Dark surfaces
-          card: '#16213e',         // Card background
-          primary: '#00ff88',      // Neon green
-          secondary: '#ff0080',    // Neon pink
-          accent: '#00d4ff',       // Neon cyan
-          text: '#e0e0e0',         // Light text
-          muted: '#666677',        // Muted text
-          border: '#2a2a3e',       // Borders
-          hover: '#252540',        // Hover state
+          bg: '#f7f1e3',
+          surface: '#f0e6d8',
+          card: '#e6dbc8',
+          primary: '#7a4b2a',
+          secondary: '#b88b4a',
+          accent: '#2f6b5f',
+          text: '#2f2416',
+          muted: '#6f6254',
+          border: '#d8c7b2',
+          hover: '#efe3d3',
         },
         glow: {
-          green: 'rgba(0, 255, 136, 0.3)',
-          pink: 'rgba(255, 0, 128, 0.3)',
-          blue: 'rgba(0, 212, 255, 0.3)',
-          purple: 'rgba(138, 43, 226, 0.3)',
+          green: 'rgba(122, 75, 42, 0.18)',
+          pink: 'rgba(184, 139, 74, 0.18)',
+          blue: 'rgba(47, 107, 95, 0.14)',
+          purple: 'rgba(120, 90, 60, 0.14)',
         },
       },
       fontFamily: {
-        sans: ['Cairo', 'system-ui', 'sans-serif'],
-        arabic: ['Noto Kufi Arabic', 'Cairo', 'sans-serif'],
+        sans: ['Noto Naskh Arabic', 'Cairo', 'Playfair Display', 'serif'],
+        arabic: ['Noto Naskh Arabic', 'Cairo', 'serif'],
+        vintage: ['Playfair Display', 'Noto Naskh Arabic', 'serif'],
         cyber: ['Orbitron', 'Rajdhani', 'monospace'],
       },
       boxShadow: {
