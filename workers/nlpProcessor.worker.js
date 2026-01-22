@@ -3,11 +3,11 @@
  * معالج النصوص في الخلفية - يمنع تجميد الواجهة
  */
 
-// استيراد وحدات NLP
-importScripts('/utils/nlp/arabicTokenizer.js');
-importScripts('/utils/nlp/patternExtractor.js');
-importScripts('/utils/nlp/contentClassifier.js');
-importScripts('/utils/nlp/duplicateDetector.js');
+// استيراد وحدات NLP - استخدام ES modules
+import { wordCount, getTextStats } from '../utils/nlp/arabicTokenizer.js';
+import { extractChapters, extractPageNumbers, quickAnalyze } from '../utils/nlp/patternExtractor.js';
+import { classifyContent } from '../utils/nlp/contentClassifier.js';
+import { detectDuplicates, generateDuplicateReport } from '../utils/nlp/duplicateDetector.js';
 
 self.addEventListener('message', async (e) => {
   const { type, data, chunkIndex } = e.data;

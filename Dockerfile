@@ -31,11 +31,11 @@ RUN npm ci --only=production && npm install -g serve
 COPY --from=builder /app/dist ./dist
 
 # Expose port
-EXPOSE ${PORT:-5001}
+EXPOSE ${PORT:-5005}
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:' + (process.env.PORT || 5001), (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+  CMD node -e "require('http').get('http://localhost:' + (process.env.PORT || 5005), (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
 
 # Start application with serve
-CMD ["sh", "-c", "serve -s dist -l ${PORT:-5001}"]
+CMD ["sh", "-c", "serve -s dist -l ${PORT:-5005}"]

@@ -95,7 +95,7 @@ npm run lint         # ✅ 54 issues (معظمها تحذيرات)
 npm test -- --run    # 🟡 33/67 pass (mocks مطلوب)
 
 # المعاينة
-npm run preview      # ✅ localhost:5001
+npm run preview      # ✅ localhost:5005
 ```
 
 ---

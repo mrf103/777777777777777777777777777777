@@ -24,7 +24,7 @@ export default defineConfig(({ mode }) => ({
     },
   },
   server: {
-    port: 5001,
+    port: 5005,
     open: true,
     host: true, // للسماح بالوصول من خارج localhost
     headers: {
@@ -33,7 +33,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   preview: {
-    port: process.env.PORT || 5001,
+    port: parseInt(process.env.PORT || '5005'),
     host: true,
     strictPort: false
   },
