@@ -81,6 +81,16 @@ VITE_GOOGLE_AI_API_KEY=your_google_ai_api_key
 # انسخ URL و anon key
 ```
 
+### 1.1 سكريبت التهيئة (جداول + سياسات أساسية)
+شغّل محتوى `scripts/supabase-init.sql` داخل SQL Editor في لوحة Supabase:
+```sql
+-- من الملف scripts/supabase-init.sql
+create extension if not exists "uuid-ossp";
+-- الجداول: manuscripts, compliance_rules, cover_designs, processing_jobs
+-- سياسات RLS أساسية (قراءة/إدراج) للتطوير
+```
+بعدها أنشئ Bucket باسم `manuscripts` في Storage (اجعل القراءة عامة للتطوير فقط، وشدّدها للإنتاج).
+
 ### 2. إنشاء Database Schema
 ```sql
 -- manuscripts table

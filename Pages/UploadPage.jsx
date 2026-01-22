@@ -189,28 +189,15 @@ const UploadPage = () => {
     if (currentFile) {
       setFiles(prev => prev.map(f =>
         f.id === currentFile.id 
-          ? { ...f, status: 'analyzing', progress: 75, analysis: results }
+          ? { ...f, status: 'completed', progress: 100, analysis: results }
           : f
       ));
       
       setAnalysisResults(results);
-      success('اكتمل التحليل! جاري الرفع إلى قاعدة البيانات...');
-
-      // رفع إلى Supabase
-      try {
-        await uploadToSupabase(currentFile, results);
-        setFiles(prev => prev.map(f =>
-          f.id === currentFile.id 
-            ? { ...f, status: 'completed', progress: 100 }
-            : f
-        ));
-      } catch (err) {
-        setFiles(prev => prev.map(f =>
-          f.id === currentFile.id 
-            ? { ...f, status: 'error', progress: 0 }
-            : f
-        ));
-      }
+      success('✅ تم التحليل بنجاح! يمكنك الآن الانتقال للخطوة التالية.');
+      
+      // TODO: رفع إلى Supabase بعد إنشاء الجداول
+      // await uploadToSupabase(currentFile, results);
     }
     
     setAnalyzing(false);
