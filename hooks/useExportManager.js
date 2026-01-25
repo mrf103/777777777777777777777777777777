@@ -277,20 +277,23 @@ const useExportManager = () => {
 
     } catch (error) {
       console.error('Export error:', error);
-      setState(prev => ({
-        ...prev,
+      setState(prevState => ({
+        ...prevState,
         error: error.message,
         isProcessing: false,
         currentStage: null
       }));
 
       // تحديث المرحلة الحالية كفاشلة
-      if (prev.currentStage) {
-        updateStage(prev.currentStage.name, {
-          status: 'error',
-          message: error.message
-        });
-      }
+      setState(prevState => {
+        if (prevState.currentStage) {
+          updateStage(prevState.currentStage.name, {
+            status: 'error',
+            message: error.message
+          });
+        }
+        return prevState;
+      });
 
       throw error;
     }

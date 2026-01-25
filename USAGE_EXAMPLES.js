@@ -43,17 +43,17 @@ async function example2_fullAnalysis(_fileContent) {
   
   // إنشاء logger لتتبع التقدم
   const logger = {
-    start: (name, _data) => {
+    start: (name) => {
       console.log(`⏳ بدأ: ${name}`);
     },
-    progress: (name, _data) => {
-      if (data.percentage) {
+    progress: (name, data) => {
+      if (data && data.percentage) {
         console.log(`   📈 ${name}: ${data.percentage.toFixed(1)}%`);
-      } else {
+      } else if (data) {
         console.log(`   ⚙️ ${name}: ${data.stage || JSON.stringify(data)}`);
       }
     },
-    complete: (name, data) => {
+    complete: (name) => {
       console.log(`✅ اكتمل: ${name}`);
     }
   };
@@ -309,11 +309,14 @@ async function example8_caching() {
 }
 
 // ===========================================
+// ===========================================
 // مثال 9: معالجة في صفحة Upload
 // ===========================================
 
 // في Pages/Upload:
-async function handleFileUpload(file) {
+async function example9_handleFileUpload(file, extractTextFromFile, quickFileAnalysis, analyzeAndCleanText, callbacks) {
+  const { setQuickResults, showError, setProcessing, setProgress, setStage, setResults } = callbacks;
+  
   // 1. استخراج النص
   const rawContent = await extractTextFromFile(file);
   

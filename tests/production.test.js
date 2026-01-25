@@ -188,7 +188,8 @@ describe('🧪 اختبارات الإنتاج الشاملة', () => {
   describe('🧠 اختبارات الذاكرة', () => {
     
     it('يجب ألا يتسبب في تسرب ذاكرة', async () => {
-      const initialMemory = typeof process !== 'undefined' ? process.memoryUsage().heapUsed : 0;
+      const hasProcess = typeof process !== 'undefined' && process.memoryUsage;
+      const initialMemory = hasProcess ? process.memoryUsage().heapUsed : 0;
       
       // معالجة متعددة
       for (let i = 0; i < 10; i++) {
@@ -196,9 +197,10 @@ describe('🧪 اختبارات الإنتاج الشاملة', () => {
       }
       
       // تنظيف
-      if (typeof global !== 'undefined' && global.gc) global.gc();
+      const hasGlobalGC = typeof global !== 'undefined' && global && global.gc;
+      if (hasGlobalGC) global.gc();
       
-      const finalMemory = typeof process !== 'undefined' ? process.memoryUsage().heapUsed : 0;
+      const finalMemory = hasProcess ? process.memoryUsage().heapUsed : 0;
       const increase = (finalMemory - initialMemory) / 1024 / 1024;
       
       expect(increase).toBeLessThan(50); // أقل من 50MB

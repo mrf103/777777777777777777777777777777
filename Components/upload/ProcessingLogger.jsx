@@ -22,7 +22,7 @@ export class ProcessingLogger {
     this.logs.push(entry);
     
     // طباعة في وضع التطوير
-    const isDev = typeof process !== 'undefined' && process && process.env && process.env.NODE_ENV === 'development';
+    const isDev = import.meta.env?.MODE === 'development';
     if (isDev) {
       console.log(`[${entry.timestamp}] [${stage}] ${status}`, details);
     }
